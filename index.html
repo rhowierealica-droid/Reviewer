@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certification Landing Page</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            color: #333;
+        }
+
+        .container {
+            background: #ffffff;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 90%;
+            max-width: 600px;
+        }
+
+        h1 {
+            color: #1a73e8; /* Google Blue */
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+
+        p {
+            margin-bottom: 30px;
+            color: #555;
+            font-size: 1.1em;
+        }
+
+        .button-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr; /* Two columns */
+            gap: 20px;
+        }
+
+        .btn {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.1s, box-shadow 0.3s;
+            text-decoration: none; /* For the <a> tag */
+            color: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Specific Button Styles */
+        .btn-infoass {
+            background-color: #f7a233; /* Orange/Gold */
+        }
+        .btn-itsm {
+            background-color: #1aa040; /* Green */
+        }
+        .btn-cgp {
+            background-color: #007bff; /* Bright Blue */
+        }
+        .btn-nettech {
+            background-color: #dc3545; /* Red */
+        }
+        
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Aral aral pa/h1>
+        <p>Valorant po</p>
+
+        <div class="button-grid">
+            
+            <a href="InfoAss.html" class="btn btn-infoass">
+                📝 Info Ass
+            </a>
+
+            <a href="ITSM.html" class="btn btn-itsm">
+                ⚙️ ITSM
+            </a>
+
+            <a href="CGP.html" class="btn btn-cgp">
+                ☁️ CGP
+            </a>
+
+            <a href="NetTech.html" class="btn btn-nettech">
+                🌐 NetTech
+            </a>
+
+        </div>
+        
+    </div>
+
+</body>
+</html>

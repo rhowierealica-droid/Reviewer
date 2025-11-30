@@ -1,0 +1,1377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Computer Graphics and Python Quiz v3 (105 Questions)</title>
+    
+    <style>
+        /* CSS (Updated for Quiz structure) */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            color: #333;
+        }
+
+        .container {
+            background: #fff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 90%;
+            max-width: 700px;
+        }
+
+        h1 {
+            color: #8A2BE2; /* BlueViolet for Graphics */
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+
+        .counter {
+            margin-bottom: 15px;
+            font-weight: 600;
+            color: #666;
+        }
+
+        /* Quiz Card & Content Styles */
+        .quiz-card {
+            background-color: #f3e6ff; /* Lighter Purple */
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 25px;
+            text-align: left;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            min-height: 250px; 
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        #question-text {
+            font-size: 1.2em;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        /* Option Buttons */
+        .options-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .option-button {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: #fff;
+            text-align: left;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background-color 0.2s, border-color 0.2s;
+        }
+
+        .option-button:hover:not(.disabled):not(.incorrect) {
+            background-color: #f0f0f0;
+            border-color: #8A2BE2;
+        }
+
+        /* Feedback Colors */
+        .option-button.correct {
+            background-color: #28a745; /* Green */
+            color: white;
+            border-color: #1e7e34;
+            font-weight: bold;
+            pointer-events: none; /* Disable correctly selected option */
+        }
+
+        .option-button.incorrect {
+            /* This is used to highlight the correct answer after a wrong attempt */
+            background-color: #dc3545; /* Red */
+            color: white;
+            border-color: #c82333;
+            font-weight: bold;
+            opacity: 0.8;
+            pointer-events: none; 
+        }
+        
+        .option-button.disabled {
+            cursor: default;
+            opacity: 0.7;
+            pointer-events: none; /* Disable when checking/moving on */
+        }
+        
+        /* Class for currently wrong answer, allowing retry */
+        .option-button.attempted-incorrect {
+            background-color: #dc3545; /* Red */
+            color: white;
+            border-color: #c82333;
+            font-weight: bold;
+            opacity: 0.6; /* Slight transparency for attempted wrong answers */
+            pointer-events: none; /* Temporarily disable the just-clicked button */
+        }
+
+
+        /* Feedback Message */
+        #feedback-message {
+            margin-top: 15px;
+            font-size: 1.1em;
+            font-weight: bold;
+            min-height: 1.5em;
+        }
+
+        /* Navigation Button */
+        #next-button {
+            background-color: #8A2BE2; /* BlueViolet */
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 600;
+            transition: background-color 0.3s, transform 0.1s;
+            box-shadow: 0 3px #5D3FD3;
+            opacity: 0.5; /* Disabled visually at start */
+            pointer-events: none; /* Disabled functionally at start */
+        }
+
+        #next-button.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        #next-button.active:hover {
+            background-color: #5D3FD3;
+        }
+
+        #next-button.active:active {
+            transform: translateY(2px);
+            box-shadow: 0 1px #5D3FD3;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>CGP Prelim To Prefinal</h1>
+        <div id="card-counter" class="counter">Question 1 of 105</div>
+
+        <div class="quiz-card">
+            <div id="question-text">Click "Start Quiz" to begin the Computer Graphics challenge!</div>
+            
+            <ul id="options-container" class="options-list">
+                </ul>
+
+            <div id="feedback-message"></div>
+        </div>
+
+        <button id="next-button" disabled>Start Quiz</button>
+    </div>
+
+    <script>
+        // JAVASCRIPT (CGP Quiz Data)
+        
+        const quizData = [
+            // --- NEW QUESTIONS ADDED FROM USER REQUEST (Set 3) ---
+            {
+                question: "Which name fits a class representing the virtual source that affects the shading and shadows?",
+                options: [
+                    "A. Light",
+                    "B. Group",
+                    "C. Renderer",
+                    "D. Camera"
+                ],
+                correctAnswer: "A"
+            },
+            {
+                question: "These are the successors of a node.",
+                options: [
+                    "A. Child nodes",
+                    "B. Parent nodes",
+                    "C. Root nodes",
+                    "D. Tree nodes"
+                ],
+                correctAnswer: "A"
+            },
+            {
+                question: "What does V in VAO stand for?",
+                options: [
+                    "A. Volume",
+                    "B. Vertex",
+                    "C. Visual",
+                    "D. Video"
+                ],
+                correctAnswer: "B"
+            },
+            {
+                question: "The location, orientation, and scale of an object are collectively known as:",
+                options: [
+                    "A. Scene graph",
+                    "B. Transform",
+                    "C. Tree",
+                    "D. Model matrix"
+                ],
+                correctAnswer: "B"
+            },
+            {
+                question: "These are the elements in a tree.",
+                options: [
+                    "A. Nodes",
+                    "B. Classes",
+                    "C. Scenes",
+                    "D. Graphs"
+                ],
+                correctAnswer: "A"
+            },
+            {
+                question: "The transform of an object relative to the root of the scene graph is known as:",
+                options: [
+                    "A. Node",
+                    "B. Tree",
+                    "C. Class structure",
+                    "D. World transformation"
+                ],
+                correctAnswer: "D"
+            },
+            {
+                question: "Which name fits a class representing the general initialization tasks?",
+                options: [
+                    "A. Group",
+                    "B. Renderer",
+                    "C. Light",
+                    "D. Camera"
+                ],
+                correctAnswer: "B"
+            },
+            {
+                question: "Which name fits a class used for rendering the point of view?",
+                options: [
+                    "A. Group",
+                    "B. Mesh",
+                    "C. Camera",
+                    "D. Material"
+                ],
+                correctAnswer: "C"
+            },
+            {
+                question: "It is the topmost node of a tree.",
+                options: [
+                    "A. Child node",
+                    "B. Parent node",
+                    "C. Root node",
+                    "D. Tree node"
+                ],
+                correctAnswer: "C"
+            },
+            {
+                question: "It represents the hierarchical nature of a structure in a graphical form.",
+                options: [
+                    "A. Node",
+                    "B. Tree",
+                    "C. Transform",
+                    "D. Class"
+                ],
+                correctAnswer: "B"
+            },
+            {
+                question: "These are the predecessors of a node.",
+                options: [
+                    "A. Child nodes",
+                    "B. Parent nodes",
+                    "C. Root nodes",
+                    "D. Tree nodes"
+                ],
+                correctAnswer: "B"
+            },
+            {
+                question: "Which name fits a class representing the root node?",
+                options: [
+                    "A. Mesh",
+                    "B. Group",
+                    "C. Scene",
+                    "D. Camera"
+                ],
+                correctAnswer: "C"
+            },
+            {
+                question: "It is where the accumulated transformations applied to an object are stored.",
+                options: [
+                    "A. Node",
+                    "B. Scene graph",
+                    "C. Model matrix",
+                    "D. Tree"
+                ],
+                correctAnswer: "C"
+            },
+            {
+                question: "The location, orientation, and scale are collectively referred to as:",
+                options: [
+                    "A. Node",
+                    "B. Scene",
+                    "C. Transform",
+                    "D. Matrix"
+                ],
+                correctAnswer: "C"
+            },
+            {
+                question: "Which name fits a class representing the nodes corresponding to objects that can be rendered?",
+                options: [
+                    "A. Camera",
+                    "B. Light",
+                    "C. Renderer",
+                    "D. Mesh"
+                ],
+                correctAnswer: "D"
+            },
+            {
+                question: "How many child nodes can a tree have?",
+                options: [
+                    "A. 0",
+                    "B. 1",
+                    "C. 2",
+                    "D. As many as you like"
+                ],
+                correctAnswer: "D"
+            },
+            {
+                question: "Which function can you use to resize an object?",
+                options: [
+                    "A. glTranslate()",
+                    "B. glScale()",
+                    "C. glPushMatrix",
+                    "D. glPopMatrix"
+                ],
+                correctAnswer: "B"
+            },
+            {
+                question: "What are the two (2) parameters required in the rendering function in the Renderer class?",
+                options: [
+                    "A. Scene object and camera object",
+                    "B. Parent object and child object",
+                    "C. Tree object and node object",
+                    "D. Internal object and external object"
+                ],
+                correctAnswer: "A"
+            },
+            {
+                question: "Which name fits a class representing the general appearance of an object?",
+                options: [
+                    "A. Geometry",
+                    "B. Material",
+                    "C. Scene",
+                    "D. Renderer"
+                ],
+                correctAnswer: "B"
+            },
+            {
+                question: "How many nodes can a tree have?",
+                options: [
+                    "A. 1",
+                    "B. 2",
+                    "C. 3",
+                    "D. As many as you like"
+                ],
+                correctAnswer: "D"
+            },
+            {
+                question: "Which best describes a scene graph?",
+                options: [
+                    "A. It stores the accumulated transformations applied to an object.",
+                    "B. It stores the transform of an object relative to its parent object.",
+                    "C. It represents a hierarchical nature of structure in a graphical form.",
+                    "D. It is a data structure that organizes the contents of a 3D scene."
+                ],
+                correctAnswer: "D" 
+            },
+            {
+                question: "Which of the following is a possible child object of a windmill?",
+                options: [
+                    "A. Vane",
+                    "B. Circle",
+                    "C. Arrow",
+                    "D. Square"
+                ],
+                correctAnswer: "A"
+            },
+            {
+                question: "Which of the following is a possible child object of a wheel?",
+                options: [
+                    "A. Vane",
+                    "B. Circle",
+                    "C. Arrow",
+                    "D. Square"
+                ],
+                correctAnswer: "B"
+            },
+            {
+                question: "In a scene graph, which can you use to represent a connection between objects?",
+                options: [
+                    "A. Arrow",
+                    "B. Circle",
+                    "C. Square",
+                    "D. Color"
+                ],
+                correctAnswer: "A"
+            },
+            {
+                question: "Which name fits a class representing the vertex-related properties of each mesh?",
+                options: [
+                    "A. Geometry",
+                    "B. Scene",
+                    "C. Group",
+                    "D. Camera"
+                ],
+                correctAnswer: "A"
+            },
+            {
+                question: "Which of the following does NOT belong to the group? (Components of a Transform)",
+                options: [
+                    "A. Location",
+                    "B. Orientation",
+                    "C. Scale",
+                    "D. Length"
+                ],
+                correctAnswer: "D"
+            },
+            {
+                question: "How many parent nodes can a child node have?",
+                options: [
+                    "A. 0",
+                    "B. 3",
+                    "C. 2",
+                    "D. 1"
+                ],
+                correctAnswer: "D"
+            },
+            {
+                question: "Which of the following is a possible child object of a cart?",
+                options: [
+                    "A. Cloud",
+                    "B. Wheel",
+                    "C. Arrow",
+                    "D. Seat"
+                ],
+                correctAnswer: "B"
+            },
+            {
+                question: "How many root nodes can a tree have?",
+                options: [
+                    "A. 0",
+                    "B. 1",
+                    "C. 2",
+                    "D. As many as you like"
+                ],
+                correctAnswer: "B"
+            },
+            {
+                question: "How many rectangles do you need to easily create a 3D table?",
+                options: [
+                    "A. 2",
+                    "B. 3",
+                    "C. 4",
+                    "D. 5"
+                ],
+                correctAnswer: "D"
+            },
+            {
+                question: "Why is grouping objects under a single parent node useful when building a complex 3D model in a scene graph?",
+                options: [
+                    "A. It allows all grouped objects to share and inherit a single transformation.",
+                    "B. It forces all child nodes to ignore their own local transformations.",
+                    "C. It prevents child nodes from being animated individually.",
+                    "D. It removes the need to define transformations for child nodes."
+                ],
+                correctAnswer: "A"
+            },
+            {
+                question: "A scene graph for a 3D environment is illustrated as a connected layout of nodes arranged in levels. What fundamental structure is being shown?",
+                options: [
+                    "A. A random grouping of scene elements",
+                    "B. A timeline of rendering operations",
+                    "C. A list of unrelated components",
+                    "D. A tree of hierarchical relationships"
+                ],
+                correctAnswer: "D"
+            },
+            {
+                question: "A logo object is used in several parts of a large display. Even though it appears multiple times, the object is stored only once. What scene-graph behavior makes this possible?",
+                options: [
+                    "A. Each appearance must be a separate model.",
+                    "B. An object may be referenced multiple times by different nodes.",
+                    "C. A single object can appear only once in a hierarchy.",
+                    "D. Reuse is not allowed in parent-child structures."
+                ],
+                correctAnswer: "B"
+            },
+            {
+                question: "A row of identical streetlamps is generated from one stored lamp object. Why is this efficient in a scene graph?",
+                options: [
+                    "A. One stored object can be reused through multiple connections.",
+                    "B. Reuse prevents hierarchy updates.",
+                    "C. Reuse is blocked by the root node.",
+                    "D. A separate geometry must be stored for each lamp."
+                ],
+                correctAnswer: "A"
+            },
+            {
+                question: "A 3D artist wants to know an object's placement in the full scene, not just within its local group. Which transformation must be considered?",
+                options: [
+                    "A. World transformation",
+                    "B. UV transformation",
+                    "C. Color transformation",
+                    "D. Raster transformation"
+                ],
+                correctAnswer: "A"
+            },
+
+
+            {
+                question: "This geometric transformation moves an object around a fixed point at a given angle.",
+                options: [
+                    "A. Scaling",
+                    "B. Translation",
+                    "C. Rotation",
+                    "D. Enhancement"
+                ],
+                correctAnswer: "C"
+            },
+            {
+                question: "It is a rectangular array of elements.",
+                options: [
+                    "A. Point",
+                    "B. Vector",
+                    "C. Scalar",
+                    "D. Matrix"
+                ],
+                correctAnswer: "D"
+            },
+            {
+                question: "Which of the following is used to access an element of a matrix?",
+                options: [
+                    "A. Point",
+                    "B. Vector",
+                    "C. Scalar",
+                    "D. Subscript"
+                ],
+                correctAnswer: "D"
+            },
+            {
+                question: "It is an individual number that is not a part of a point or vector.",
+                options: [
+                    "A. Tail",
+                    "B. Head",
+                    "C. Vector",
+                    "D. Scalar"
+                ],
+                correctAnswer: "D"
+            },
+            {
+                question: "Which is used to define the distance to move an object's coordinate?",
+                options: [
+                    "A. Translation vector",
+                    "B. Scaling factor",
+                    "C. Angle of view",
+                    "D. Aspect ratio"
+                ],
+                correctAnswer: "A"
+            },
+            {
+                question: "It measures how much of the scene is visible to the viewer.",
+                options: [
+                    "A. View plane",
+                    "B. Aspect ratio",
+                    "C. Angle of view",
+                    "D. Projection window"
+                ],
+                correctAnswer: "B"
+            },
+            {
+                question: "It is computed by interchanging the rows and columns of a matrix.",
+                options: [
+                    "A. Point",
+                    "B. Scalar",
+                    "C. Vector",
+                    "D. Transpose k"
+                ],
+                correctAnswer: "D"
+            },
+            {
+                question: "This geometric transformation changes the size of an object's dimensions.",
+                options: [
+                    "A. Scaling k",
+                    "B. Translation",
+                    "C. Rotation",
+                    "D. Enhancement"
+                ],
+                correctAnswer: "A"
+            },
+            {
+                question: "It refers to a location in space, specified relative to a coordinate system.",
+                options: [
+                    "A. Point",
+                    "B. Vector",
+                    "C. Scalar",
+                    "D. Matrix"
+                ],
+                correctAnswer: "A"
+            },
+            {
+                question: "It is also known as the initial point of the arrow.",
+                options: [
+                    "A. Tail",
+                    "B. Head",
+                    "C. Magnitude",
+                    "D. Scalar"
+                ],
+                correctAnswer: "B" 
+            },
+            {
+                question: "It is also known as the terminal point of the arrow.",
+                options: [
+                    "A. Tail",
+                    "B. Head",
+                    "C. Magnitude",
+                    "D. Scalar"
+                ],
+                correctAnswer: "A" 
+            },
+            {
+                question: "It refers to the change applied to an object in terms of size, orientation, or position.",
+                options: [
+                    "A. Geometric transformation",
+                    "B. Projection",
+                    "C. Angle of view",
+                    "D. Aspect ratio"
+                ],
+                correctAnswer: "A"
+            },
+            {
+                question: "It is also known as the truncated pyramid in a perspective projection.",
+                options: [
+                    "A. Frustum",
+                    "B. Angle of view",
+                    "C. Aspect ratio",
+                    "D. Projection window"
+                ],
+                correctAnswer: "A"
+            },
+            {
+                question: "Which is used to determine whether the size of an object will increase or reduce?",
+                options: [
+                    "A. Translation vector",
+                    "B. Scaling factor k",
+                    "C. Angle of view",
+                    "D. Aspect ratio"
+                ],
+                correctAnswer: "B"
+            },
+            {
+                question: "It refers to the amount of change in each coordinate, typically drawn as an arrow.",
+                options: [
+                    "A. Point",
+                    "B. Vector",
+                    "C. Scalar",
+                    "D. Matrix"
+                ],
+                correctAnswer: "B"
+            },
+            {
+                question: "Which of the following DOES NOT belong to the group?",
+                options: [
+                    "A. Tail",
+                    "B. Head",
+                    "C. Magnitude",
+                    "D. Matrix"
+                ],
+                correctAnswer: "C"
+            },
+            {
+                question: "How many parameters does gluPerspective() typically require?",
+                options: [
+                    "A. 1",
+                    "B. 2",
+                    "C. 3",
+                    "D. 4"
+                ],
+                correctAnswer: "B" 
+            },
+            {
+                question: "In OpenGL, which will you use to move an object around a fixed point?",
+                options: [
+                    "A. gluPerspective()",
+                    "B. glTranslate()",
+                    "C. glRotate()",
+                    "D. glScale()"
+                ],
+                correctAnswer: "C"
+            },
+            {
+                question: "What is the formula for vector subtraction?",
+                options: [
+                    "A. V + W = <(V₁ + W₁), (V₂ + W₂)>",
+                    "B. V + W = <(V₁ - W₁), (V₂ - W₂)>",
+                    "C. V + W = <V₁ - W₁, V₂ + W₂>",
+                    "D. V + W = <V₁ + W₁, V₂ - W₂>"
+                ],
+                correctAnswer: "A" 
+            },
+            {
+                question: "How many parameters does the glScale() function typically require?",
+                options: [
+                    "A. 1",
+                    "B. 2",
+                    "C. 3",
+                    "D. 4"
+                ],
+                correctAnswer: "B" 
+            },
+            {
+                question: "Which causes an error in the Python code below? (if event.type == pygame.KEYDOWN: if event.key == K_a: glTranslate(-1, 0, 0))",
+                options: [
+                    "A. if event.type == pygame.KEYDOWN:",
+                    "B. if event.key == K_a:",
+                    "C. glTranslate()",
+                    "D. (-1, 0, 0)"
+                ],
+                correctAnswer: "B" 
+            },
+            {
+                question: "In OpenGL, which will you use to move an object's dimension to another location?",
+                options: [
+                    "A. gluPerspective()",
+                    "B. glTranslate()",
+                    "C. glRotate()",
+                    "D. glScale()"
+                ],
+                correctAnswer: "B"
+            },
+            {
+                question: "How many parameters does the glTranslate() function typically require?",
+                options: [
+                    "A. 1",
+                    "B. 2",
+                    "C. 3",
+                    "D. 4"
+                ],
+                correctAnswer: "C" 
+            },
+            {
+                question: "Which of the following statements is NOT TRUE about scaling?",
+                options: [
+                    "A. A scaling factor greater than 1 implies that the object's size will be increased.",
+                    "B. If the scaling factor is less than 1, the object size will be reduced.",
+                    "C. If the scaling factor for each axis is 1, the scale matrix shall consist of an identity matrix.", 
+                    "D. Any point or matrix multiplied by the identity matrix is unchanged." 
+                ],
+                correctAnswer: "C" 
+            },
+            {
+                question: "What will you use to update the content of the entire display in pygame?",
+                options: [
+                    "A. glClear()",
+                    "B. Flip()",
+                    "C. glLoadIdentity()",
+                    "D. gluPerspective()"
+                ],
+                correctAnswer: "B" 
+            },
+            {
+                question: "How many parameters does the glRotate() function typically require?",
+                options: [
+                    "A. 1",
+                    "B. 2",
+                    "C. 3",
+                    "D. 4"
+                ],
+                correctAnswer: "C" 
+            },
+            {
+                question: "Which of the following statements is correct?",
+                options: [
+                    "A. glBegin(GL_POINTS)",
+                    "B. glBegin(GL_LINES)",
+                    "C. glBegin(GLPOINTS)",
+                    "D. glStart(GLPOINTS)"
+                ],
+                correctAnswer: "D" 
+            },
+            {
+                question: "What is the formula for vector addition?",
+                options: [
+                    "A. V + W = <V₁ - W₁, V₂ + W₂>",
+                    "B. V + W = <V₁ - W₁, V₂ - W₂>",
+                    "C. V + W = <V₁ + W₁, V₂ - W₂>",
+                    "D. V + W = <V₁ + W₁, V₂ + W₂>"
+                ],
+                correctAnswer: "D"
+            },
+            {
+                question: "Which of the following sets the window's caption in pygame?",
+                options: [
+                    "A. pygame.display.set_caption(my_game)",
+                    "B. pygame.display.setCaption(\"My Game\")",
+                    "C. pygame.display.set_caption(\"My Game\")",
+                    "D. pygame.display.setCaption(My Game)"
+                ],
+                correctAnswer: "C"
+            },
+            {
+                question: "Which of the following statements is NOT TRUE about matrix operations?",
+                options: [
+                    "A. Matrices with different dimensions can be added or subtracted.", 
+                    "B. You can only multiply matrices if the number of columns on the left-hand side matrix is equal to the number of rows on the right-hand side matrix.",
+                    "C. To multiply matrices, multiply the elements of each row of the first matrix by the elements of each column in the second matrix.",
+                    "D. You can multiply a scalar by each element of the matrix using the dot operator."
+                ],
+                correctAnswer: "A"
+            },
+            {
+                question: "Which of the following correctly represents a 3D scaling transformation?",
+                options: [
+                    "A. Adding translation vectors to each axis",
+                    "B. Multiplying each coordinate by a corresponding scaling factor",
+                    "C. Rotating the object by a fixed angle around the origin",
+                    "D. Interchanging the x and y coordinates of the object"
+                ],
+                correctAnswer: "B"
+            },
+            {
+                question: "Matrix multiplication is defined only if",
+                options: [
+                    "A. The two matrices have the same number of rows.",
+                    "B. The two matrices have the same number of columns.",
+                    "C. The number of rows of the first matrix equals the number of rows of the second matrix.",
+                    "D. The number of columns of the first matrix equals the number of rows of the second matrix."
+                ],
+                correctAnswer: "C" 
+            },
+            {
+                question: "The angle of view in a perspective projection directly affects which characteristic of the frustum?",
+                options: [
+                    "A. The width of the frustum for fixed near and far distance",
+                    "B. The height of the near plane only",
+                    "C. The visibility of points outside the far plane.",
+                    "D. The number of vanishing points in the projection"
+                ],
+                correctAnswer: "A"
+            },
+            {
+                question: "Which of the following best explains why a vector in standard position is unique compared to other placements of the same vector?",
+                options: [
+                    "A. It is drawn without a coordinate system.",
+                    "B. Its tail is always located at the origin.",
+                    "C. Its magnitude is fixed to 1.",
+                    "D. It cannot be represented by an arrow diagram."
+                ],
+                correctAnswer: "B"
+            },
+            {
+                question: "Which statement correctly describes the projection window in perspective projection?",
+                options: [
+                    "A. It corresponds to the farthest side of the frustum from the origin.",
+                    "B. It defines the rotation angle used in 3D transformations.",
+                    "C. It is identical to the aspect ratio regardless of dimensions.",
+                    "D. It represents the smaller rectangular side of the frustum nearest the origin"
+                ],
+                correctAnswer: "D"
+            },
+
+
+            {
+                question: "It describes the use of computer graphics to create and manipulate images.",
+                options: [
+                    "A. Buffer",
+                    "B. Computer Graphics",
+                    "C. Resolution",
+                    "D. Raster"
+                ],
+                correctAnswer: "B"
+            },
+            {
+                question: "It deals with the creation of shaded images from 3D computer models.",
+                options: [
+                    "A. Animation",
+                    "B. Raster",
+                    "C. Resolution",
+                    "D. Rendering"
+                ],
+                correctAnswer: "D"
+            },
+            {
+                question: "It deals with the mathematical specification of shape and appearance properties.",
+                options: [
+                    "A. Animation",
+                    "B. Modeling",
+                    "C. Raster",
+                    "D. Rendering"
+                ],
+                correctAnswer: "B"
+            },
+            {
+                question: "What is the final stage in the Graphics Pipeline Model?",
+                options: [
+                    "A. Application",
+                    "B. Geometry Processing",
+                    "C. Pixel Processing",
+                    "D. Rasterization"
+                ],
+                correctAnswer: "C"
+            },
+            {
+                question: "Which substage checks if the user pressed a key?",
+                options: [
+                    "A. Process input",
+                    "B. Update",
+                    "C. Render",
+                    "D. Shutdown"
+                ],
+                correctAnswer: "A"
+            },
+            {
+                question: "It is a technique to create an illusion of motion through a sequence of images.",
+                options: [
+                    "A. Animation",
+                    "B. Modeling",
+                    "C. Rendering",
+                    "D. Resolution"
+                ],
+                correctAnswer: "A"
+            },
+            {
+                question: "It is a graphical interface element that displays an application's content.",
+                options: [
+                    "A. Image",
+                    "B. Point",
+                    "C. Shape",
+                    "D. Window"
+                ],
+                correctAnswer: "D"
+            },
+            {
+                question: "This substage changes the values of variables and objects.",
+                options: [
+                    "A. Process input",
+                    "B. Update",
+                    "C. Render",
+                    "D. Shutdown"
+                ],
+                correctAnswer: "B"
+            },
+            {
+                question: "This substage creates graphics that are displayed on the screen.",
+                options: [
+                    "A. Process input",
+                    "B. Render",
+                    "C. Update",
+                    "D. Shutdown"
+                ],
+                correctAnswer: "D" 
+            },
+            {
+                question: "Which of the following functions performs the same action as turtle.backward() in Python?",
+                options: [
+                    "A. back()",
+                    "B. bk()",
+                    "C. reverse()",
+                    "D. retreat()"
+                ],
+                correctAnswer: "D" 
+            },
+            {
+                question: "This stage repeats continuously while the application is running.",
+                options: [
+                    "A. Main loop",
+                    "B. Processing",
+                    "C. Shutdown",
+                    "D. Startup"
+                ],
+                correctAnswer: "A"
+            },
+            {
+                question: "Which function controls the Python turtle's orientation?",
+                options: [
+                    "A. penup()",
+                    "B. pendown()",
+                    "C. setheading()",
+                    "D. reset()"
+                ],
+                correctAnswer: "C"
+            },
+            {
+                question: "During this stage, any required external files are loaded.",
+                options: [
+                    "A. Main loop",
+                    "B. Processing",
+                    "C. Shutdown",
+                    "D. Startup"
+                ],
+                correctAnswer: "D"
+            },
+            {
+                question: "It serves as temporary storage for data while being moved from one location to another.",
+                options: [
+                    "A. Buffer",
+                    "B. Pixel",
+                    "C. Raster",
+                    "D. Resolution"
+                ],
+                correctAnswer: "A"
+            },
+            {
+                question: "What is the first stage in the Graphics Pipeline Model?",
+                options: [
+                    "A. Application",
+                    "B. Geometry Processing",
+                    "C. Pixel Processing",
+                    "D. Rasterization"
+                ],
+                correctAnswer: "A"
+            },
+            {
+                question: "Which of the following is NOT used in filling a circle's color?",
+                options: [
+                    "A. t.begin_fill()",
+                    "B. t.color(\"red\")",
+                    "C. t.end_fill()",
+                    "D. t.circle(red)"
+                ],
+                correctAnswer: "D"
+            },
+            {
+                question: "Which of the following DOES belong to the group?",
+                options: [
+                    "A. Image transformation",
+                    "B. Model transformation",
+                    "C. Projection transformation",
+                    "D. View transformation"
+                ],
+                correctAnswer: "B"
+            },
+            {
+                question: "Which of the following is NOT a substage of the main loop?",
+                options: [
+                    "A. Process input",
+                    "B. Render",
+                    "C. Update",
+                    "D. Shutdown"
+                ],
+                correctAnswer: "B" 
+            },
+            {
+                question: "What is the RGB equivalent of violet?",
+                options: [
+                    "A. 1.0, 5.0",
+                    "B. 0.5, 0.1",
+                    "C. 0.5, 0.5, 0.5",
+                    "D. 1.0, 5.0, 5"
+                ],
+                correctAnswer: "B" 
+            },
+            {
+                question: "Which of the following is NOT used in drawing a triangle?",
+                options: [
+                    "A. glBegin",
+                    "B. GL_TRIANGLE",
+                    "C. glEnd",
+                    "D. glVertex3f"
+                ],
+                correctAnswer: "B" 
+            },
+            {
+                question: "Two (2) values are specified when setting up a window. What do they represent?",
+                options: [
+                    "A. The x and y position",
+                    "B. The window's width and height",
+                    "C. The variable's initial and final value",
+                    "D. The start and end time"
+                ],
+                correctAnswer: "B"
+            },
+            {
+                question: "If you need to make the Python turtle face west, what value should you use?",
+                options: [
+                    "A. 0",
+                    "B. 90",
+                    "C. 180",
+                    "D. 270"
+                ],
+                correctAnswer: "C"
+            },
+            {
+                question: "Which of the following coordinate systems is NOT equivalent to the others in the context of 3D rendering pipelines?",
+                options: [
+                    "A. Camera space",
+                    "B. Eye space",
+                    "C. View space",
+                    "D. Object space"
+                ],
+                correctAnswer: "B" 
+            },
+            {
+                question: "If you need to make the Python turtle face south, what value should you use?",
+                options: [
+                    "A. 0",
+                    "B. 90",
+                    "C. 180",
+                    "D. 270"
+                ],
+                correctAnswer: "D"
+            },
+            {
+                question: "In the Python statement below, what does move_right represent? (screen.onkey(move_right, \"Right\"))",
+                options: [
+                    "A. The string that represents the key",
+                    "B. The name of the function",
+                    "C. The name you assigned to the turtle",
+                    "D. The integer that counts the steps"
+                ],
+                correctAnswer: "A" 
+            },
+            {
+                question: "In the Python statement below, what does \"Right\" represent? (screen.onkey(move_right, \"Right\"))",
+                options: [
+                    "A. The string that represents the key",
+                    "B. The name of the function",
+                    "C. The name you assigned to the turtle",
+                    "D. The integer that counts the steps"
+                ],
+                correctAnswer: "A" 
+            },
+            {
+                question: "Which of the following is NOT performed during the Application stage?",
+                options: [
+                    "A. Calculating the final color of the fragments",
+                    "B. Creating a window",
+                    "C. Reading data required for rendering",
+                    "D. Sending data to the GPU"
+                ],
+                correctAnswer: "D" 
+            },
+            {
+                question: "What is the RGB equivalent of orange?",
+                options: [
+                    "A. 1.0, 5.0",
+                    "B. 0.5, 0.5, 0.5",
+                    "C. 0.5, 0.5, 0.5",
+                    "D. 1.0, 5.0, 5"
+                ],
+                correctAnswer: "B" 
+            },
+            {
+                question: "Which of the following data is NOT involved in calculating the final color of fragments?",
+                options: [
+                    "A. Base color",
+                    "B. Frames per second",
+                    "C. Light source",
+                    "D. Texture"
+                ],
+                correctAnswer: "B"
+            },
+            {
+                question: "Which of the following is NOT part of a vertex's content?",
+                options: [
+                    "A. Buffer",
+                    "B. Color",
+                    "C. Normal vector",
+                    "D. A set of texture coordinates"
+                ],
+                correctAnswer: "D" 
+            },
+            {
+                question: "What does a vertex typically include aside from its position in 3D space?",
+                options: [
+                    "A. Only the base color of the fragment",
+                    "B. Light direction and depth value",
+                    "C. Application loop parameters",
+                    "D. Color, texture coordinates, and a normal vector"
+                ],
+                correctAnswer: "D"
+            },
+            {
+                question: "What is the main advantage of using a graphics pipeline model in rendering?",
+                options: [
+                    "A. It simplifies coding by eliminating shaders.",
+                    "B. It limits rendering to only 2D objects.",
+                    "C. It breaks down rendering into efficient, sequential stages.",
+                    "D. It replaces the need for a dedicated graphics processor."
+                ],
+                correctAnswer: "C"
+            },
+            {
+                question: "In custom movement functions using setheading(), what orientation should be set to move the turtle south?",
+                options: [
+                    "A. 0",
+                    "B. 90",
+                    "C. 180",
+                    "D. 270"
+                ],
+                correctAnswer: "D"
+            },
+            {
+                question: "What does the circle() function require to execute properly?",
+                options: [
+                    "A. A heading direction",
+                    "B. An angle in degrees",
+                    "C. A radius value",
+                    "D. A color name"
+                ],
+                correctAnswer: "C"
+            },
+            {
+                question: "Why are uniform variables useful in rendering multiple shapes with consistent attributes?",
+                options: [
+                    "A. They automatically update on every pixel processed.",
+                    "B. They maintain constant values across a shape during a draw call.",
+                    "C. They assign new shaders to each fragment.",
+                    "D. They change dynamically for each vertex in a mesh."
+                ],
+                correctAnswer: "B"
+            }
+        ];
+
+        // 2. DOM Elements and State Variables
+        const questionTextEl = document.getElementById('question-text');
+        const optionsContainer = document.getElementById('options-container');
+        const nextButton = document.getElementById('next-button');
+        const cardCounterEl = document.getElementById('card-counter');
+        const feedbackMessageEl = document.getElementById('feedback-message');
+
+        let currentCardIndex = 0;
+        let answeredCorrectly = false; // Tracks if the current question has been answered correctly
+        
+        // Helper function to extract the letter key (A, B, C, D) from the option text
+        function getOptionKey(optionText) {
+            return optionText.charAt(0);
+        }
+
+        // 3. Functions
+        function loadQuestion() {
+            if (quizData.length === 0) {
+                questionTextEl.textContent = "Quiz data is empty. Please check the data source.";
+                return;
+            }
+
+            const card = quizData[currentCardIndex];
+            
+            // 1. Reset state
+            answeredCorrectly = false;
+            optionsContainer.innerHTML = '';
+            feedbackMessageEl.textContent = '';
+            
+            // Ensure Next Button is disabled until correct answer is chosen
+            nextButton.classList.remove('active');
+            nextButton.setAttribute('disabled', 'true');
+            nextButton.textContent = "Next Question"; // Reset button text
+            
+            // 2. Display Question & Counter
+            questionTextEl.textContent = card.question;
+            cardCounterEl.textContent = `Question ${currentCardIndex + 1} of ${quizData.length}`;
+            
+            // 3. Create Option Buttons
+            card.options.forEach(optionText => {
+                const li = document.createElement('li');
+                const button = document.createElement('button');
+                
+                button.className = 'option-button';
+                button.textContent = optionText;
+                button.dataset.key = getOptionKey(optionText); // Store the key (A, B, C, D)
+                button.addEventListener('click', checkAnswer);
+                
+                li.appendChild(button);
+                optionsContainer.appendChild(li);
+            });
+
+            if (currentCardIndex === quizData.length - 1 && answeredCorrectly) {
+                nextButton.textContent = "Finish/Restart Quiz";
+            }
+        }
+
+        function checkAnswer(event) {
+            const selectedButton = event.target;
+            
+            // Prevent double-checking
+            if (selectedButton.classList.contains('attempted-incorrect') || selectedButton.classList.contains('correct')) {
+                return;
+            }
+            
+            const selectedKey = selectedButton.dataset.key;
+            const correctKey = quizData[currentCardIndex].correctAnswer;
+            
+            // Disable only the clicked button temporarily
+            selectedButton.classList.add('disabled');
+            
+            // Provide feedback
+            if (selectedKey === correctKey) {
+                answeredCorrectly = true;
+                
+                // Highlight CORRECT answer and disable all options permanently for this question
+                Array.from(optionsContainer.children).forEach(li => {
+                    const button = li.querySelector('.option-button');
+                    button.removeEventListener('click', checkAnswer);
+                    button.classList.add('disabled'); // Disable all permanently
+                    if (button.dataset.key === correctKey) {
+                        button.classList.add('correct');
+                    }
+                });
+                
+                feedbackMessageEl.textContent = "✅ Correct! Click Next Question to continue.";
+                
+                // Enable Next button ONLY on correct answer
+                nextButton.classList.add('active');
+                nextButton.removeAttribute('disabled');
+
+                if (currentCardIndex === quizData.length - 1) {
+                    nextButton.textContent = "Finish/Restart Quiz";
+                }
+                
+            } else {
+                answeredCorrectly = false;
+                selectedButton.classList.add('attempted-incorrect');
+                selectedButton.classList.remove('disabled'); // Re-enable for the next attempt
+                selectedButton.removeEventListener('click', checkAnswer); // Ensure this specific option can't be clicked again
+                
+                feedbackMessageEl.textContent = "❌ Incorrect. Try another answer! The one you chose is now disabled.";
+                
+                // Next Button remains disabled
+                nextButton.classList.remove('active');
+                nextButton.setAttribute('disabled', 'true');
+            }
+        }
+
+        function nextQuestion() {
+            // Only proceed if the question was answered correctly
+            if (!answeredCorrectly) {
+                return;
+            }
+            
+            if (currentCardIndex < quizData.length - 1) {
+                currentCardIndex++;
+                loadQuestion();
+            } else {
+                // Quiz finished, wrap around or show score (for simplicity, we wrap)
+                alert(`Quiz Finished! You completed all ${quizData.length} questions. Restarting now.`);
+                currentCardIndex = 0; // Reset for restart
+                loadQuestion();
+            }
+        }
+
+        // 4. Event Listeners
+        nextButton.addEventListener('click', nextQuestion);
+
+        // 5. Initial Load
+        loadQuestion();
+        nextButton.textContent = "Start Quiz";
+    </script>
+</body>
+</html>

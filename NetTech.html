@@ -1,0 +1,1379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Networking Technologies and Cloud Quiz (NetTech) (105 Questions)</title>
+    
+    <style>
+        /* CSS (Updated for Quiz structure) */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            color: #333;
+        }
+
+        .container {
+            background: #fff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 90%;
+            max-width: 700px;
+        }
+
+        h1 {
+            color: #1E90FF; /* DodgerBlue for Networking/Cloud */
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+
+        .counter {
+            margin-bottom: 15px;
+            font-weight: 600;
+            color: #666;
+        }
+
+        /* Quiz Card & Content Styles */
+        .quiz-card {
+            background-color: #e6f7ff; /* Lighter Blue */
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 25px;
+            text-align: left;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            min-height: 250px; 
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        #question-text {
+            font-size: 1.2em;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        /* Option Buttons */
+        .options-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .option-button {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: #fff;
+            text-align: left;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background-color 0.2s, border-color 0.2s;
+        }
+
+        .option-button:hover:not(.disabled):not(.incorrect) {
+            background-color: #f0f0f0;
+            border-color: #1E90FF;
+        }
+
+        /* Feedback Colors */
+        .option-button.correct {
+            background-color: #28a745; /* Green */
+            color: white;
+            border-color: #1e7e34;
+            font-weight: bold;
+            pointer-events: none; /* Disable correctly selected option */
+        }
+
+        .option-button.incorrect {
+            /* This is used to highlight the correct answer after a wrong attempt */
+            background-color: #dc3545; /* Red */
+            color: white;
+            border-color: #c82333;
+            font-weight: bold;
+            opacity: 0.8;
+            pointer-events: none; 
+        }
+        
+        .option-button.disabled {
+            cursor: default;
+            opacity: 0.7;
+            pointer-events: none; /* Disable when checking/moving on */
+        }
+        
+        /* Class for currently wrong answer, allowing retry */
+        .option-button.attempted-incorrect {
+            background-color: #dc3545; /* Red */
+            color: white;
+            border-color: #c82333;
+            font-weight: bold;
+            opacity: 0.6; /* Slight transparency for attempted wrong answers */
+            pointer-events: none; /* Temporarily disable the just-clicked button */
+        }
+
+
+        /* Feedback Message */
+        #feedback-message {
+            margin-top: 15px;
+            font-size: 1.1em;
+            font-weight: bold;
+            min-height: 1.5em;
+        }
+
+        /* Navigation Button */
+        #next-button {
+            background-color: #1E90FF; /* DodgerBlue */
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 600;
+            transition: background-color 0.3s, transform 0.1s;
+            box-shadow: 0 3px #1C86EE;
+            opacity: 0.5; /* Disabled visually at start */
+            pointer-events: none; /* Disabled functionally at start */
+        }
+
+        #next-button.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        #next-button.active:hover {
+            background-color: #1C86EE;
+        }
+
+        #next-button.active:active {
+            transform: translateY(2px);
+            box-shadow: 0 1px #1C86EE;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Net Tech Prelim To Prefinal</h1>
+        <div id="card-counter" class="counter">Question 1 of 105</div>
+
+        <div class="quiz-card">
+            <div id="question-text">Click "Start Quiz" to begin the Networking and Cloud challenge!</div>
+            
+            <ul id="options-container" class="options-list">
+                </ul>
+
+            <div id="feedback-message"></div>
+        </div>
+
+        <button id="next-button" disabled>Start Quiz</button>
+    </div>
+
+    <script>
+        // JAVASCRIPT (NetTech Quiz Data)
+        
+        const quizData = [
+            // --- NEW QUESTIONS ADDED FROM USER REQUEST (Set 3) ---
+            {
+                question: "It is the fundamental storage unit in OBS.",
+                options: [
+                    "A. Object",
+                    "B. Bucket",
+                    "C. Key",
+                    "D. Metadata"
+                ],
+                correctAnswer: "A"
+            },
+            {
+                question: "It is a container for storing objects in OBS.",
+                options: [
+                    "A. Key",
+                    "B. Metadata",
+                    "C. Data",
+                    "D. Bucket"
+                ],
+                correctAnswer: "D"
+            },
+            {
+                question: "In Huawei CLOUD, which EVS type is suitable for commonly accessed workloads?",
+                options: [
+                    "A. Extreme SSD",
+                    "B. Ultra-high I/O",
+                    "C. General Purpose SSD",
+                    "D. High I/O"
+                ],
+                correctAnswer: "D"
+            },
+            {
+                question: "It is the number of read/write operations performed by an EVS disk per second.",
+                options: [
+                    "A. IOPS",
+                    "B. Distributed file system",
+                    "C. Throughput",
+                    "D. Read/write I/O"
+                ],
+                correctAnswer: "A"
+            },
+            {
+                question: "In Huawei CLOUD, which EVS type is for workloads demanding ultra-high bandwidth and ultra-low latency?",
+                options: [
+                    "A. Ultra-high I/O",
+                    "B. General Purpose SSD",
+                    "C. High I/O",
+                    "D. Extreme SSD"
+                ],
+                correctAnswer: "D"
+            },
+            {
+                question: "These are created to rapidly save the disk data at specified time points.",
+                options: [
+                    "A. Snapshots",
+                    "B. Backups",
+                    "C. Objects",
+                    "D. Protocols"
+                ],
+                correctAnswer: "A"
+            },
+            {
+                question: "It is a copy of a disk taken at a given point in time and is stored in a different location.",
+                options: [
+                    "A. Snapshot",
+                    "B. Redundancy",
+                    "C. Backup",
+                    "D. Rebuild"
+                ],
+                correctAnswer: "C"
+            },
+            {
+                question: "It is a distributed file system protocol that allows different computers and operating systems to share data over a network.",
+                options: [
+                    "A. Network File System",
+                    "B. Common Internet File System",
+                    "C. Portable Operating System Interface",
+                    "D. Dynamic Host Configuration Protocol"
+                ],
+                correctAnswer: "A"
+            },
+            {
+                question: "It is used to specify the name of an object.",
+                options: [
+                    "A. Bucket",
+                    "B. Data",
+                    "C. Key",
+                    "D. Metadata"
+                ],
+                correctAnswer: "C"
+            },
+            {
+                question: "In Huawei CLOUD, which EVS type is designed for enterprise applications with medium performance requirements?",
+                options: [
+                    "A. Extreme SSD",
+                    "B. General Purpose SSD",
+                    "C. Ultra-high I/O",
+                    "D. High I/O"
+                ],
+                correctAnswer: "B"
+            },
+            {
+                question: "It is the amount of data read from and written into an EVS disk per second.",
+                options: [
+                    "A. IOPS",
+                    "B. Throughput",
+                    "C. Distributed file system",
+                    "D. Read/write I/O latency"
+                ],
+                correctAnswer: "B"
+            },
+            {
+                question: "Which of the following is used by EVS to guarantee data reliability?",
+                options: [
+                    "A. Two-Copy Redundancy",
+                    "B. Three-Copy Redundancy",
+                    "C. Four-Copy Redundancy",
+                    "D. Five-Copy Redundancy"
+                ],
+                correctAnswer: "B"
+            },
+            {
+                question: "In Huawei CLOUD, which EVS type is excellent for enterprise-mission critical services as well as workloads demanding high throughput and low latency?",
+                options: [
+                    "A. Ultra-high I/O",
+                    "B. Extreme SSD",
+                    "C. General Purpose SSD",
+                    "D. High I/O"
+                ],
+                correctAnswer: "A"
+            },
+            {
+                question: "It is a set of key-value pairs that are assigned to objects stored in OBS.",
+                options: [
+                    "A. Bucket",
+                    "B. Key",
+                    "C. Data",
+                    "D. Metadata"
+                ],
+                correctAnswer: "D"
+            },
+            {
+                question: "It is the minimum interval between two (2) consecutive read/write operations on an EVS disk.",
+                options: [
+                    "A. Throughput",
+                    "B. IOPS",
+                    "C. Read/write I/O latency",
+                    "D. Distributed file system"
+                ],
+                correctAnswer: "C"
+            },
+            {
+                question: "With its intuitive graphical user interface (GUI), you can create and manage file systems conveniently. Which advantage of SFS is described?",
+                options: [
+                    "A. Elastic scaling",
+                    "B. Superior performance and reliability",
+                    "C. Seamless integration",
+                    "D. Easy operation and low costs"
+                ],
+                correctAnswer: "D"
+            },
+            {
+                question: "Which of the following scenarios happens first in the data rebuild process?",
+                options: [
+                    "A. A physical device fails.",
+                    "B. Data copies are automatically rebuilt and concurrently restored on multiple nodes.",
+                    "C. Data copies are scattered in the storage system.",
+                    "D. The system automatically identifies the failure cause."
+                ],
+                correctAnswer: "D"
+            },
+            {
+                question: "Which among the following is the third scenario in the data rebuild process?",
+                options: [
+                    "A. A physical device fails.",
+                    "B. Data copies are automatically rebuilt and concurrently restored on multiple nodes.",
+                    "C. Data copies are scattered in the storage system.",
+                    "D. The system automatically identifies the failure cause."
+                ],
+                correctAnswer: "B"
+            },
+            {
+                question: "OBS provides SDKs and data migration tools to help you quickly move your workloads to the cloud. Which advantage is described?",
+                options: [
+                    "A. Easy use and management",
+                    "B. Tiered storage and on-demand use",
+                    "C. Data durability and service continuity",
+                    "D. Multi-level protection and authorization management"
+                ],
+                correctAnswer: "A"
+            },
+            {
+                question: "Data protection functions safeguard the disk data, preventing incorrect data caused by application exceptions or attacks. Which advantage of EVS is described?",
+                options: [
+                    "A. High security and reliability",
+                    "B. Various disk types",
+                    "C. Elastic scalability",
+                    "D. Real-time monitoring"
+                ],
+                correctAnswer: "A"
+            },
+            {
+                question: "Storage can be resized on demand to dynamically adapt to service changes without interrupting applications. Which advantage of SFS is described?",
+                options: [
+                    "A. Elastic scaling",
+                    "B. Superior performance and reliability",
+                    "C. Seamless integration",
+                    "D. Easy operation and low costs"
+                ],
+                correctAnswer: "A"
+            },
+            {
+                question: "What are the two (2) encryption functions provided by EVS?",
+                options: [
+                    "A. Extreme encryption and ultra-high I/O encryption",
+                    "B. File encryption and network encryption",
+                    "C. System disk encryption and data disk encryption",
+                    "D. Backup encryption and snapshot encryption"
+                ],
+                correctAnswer: "C"
+            },
+            {
+                question: "Which among the following is the second scenario in the data rebuild process?",
+                options: [
+                    "A. A physical device fails.",
+                    "B. Data copies are automatically rebuilt and concurrently restored on multiple nodes.",
+                    "C. Data copies are scattered in the storage system.",
+                    "D. The system automatically identifies the failure cause."
+                ],
+                correctAnswer: "A"
+            },
+            {
+                question: "SFS supports NFS which allows a broad range of mainstream applications to read and write data in the file system. Which advantage is described?",
+                options: [
+                    "A. Easy operation and low costs",
+                    "B. Elastic scaling",
+                    "C. Superior performance and reliability",
+                    "D. Seamless integration"
+                ],
+                correctAnswer: "D"
+            },
+            {
+                question: "OBS implements measures such as versioning, server-side encryption, and URL validation. Which advantage is described?",
+                options: [
+                    "A. Data durability and service continuity",
+                    "B. Easy use and management",
+                    "C. Tiered storage and on-demand use",
+                    "D. Multi-level protection and authorization management"
+                ],
+                correctAnswer: "D"
+            },
+            {
+                question: "Which best describes the Common Internet File System?",
+                options: [
+                    "A. It is a container for storing objects in OBS.",
+                    "B. It is a protocol used for network file access.",
+                    "C. It is a set of interrelated standards to define the API for software compatible with variants of UNIX.",
+                    "D. It is used to specify the name of an object."
+                ],
+                correctAnswer: "B"
+            },
+            {
+                question: "EVS allows you to expand capacity on-demand and without interrupting services. Which advantage is described?",
+                options: [
+                    "A. Various disk types",
+                    "B. Real-time monitoring",
+                    "C. High security and reliability",
+                    "D. Elastic scalability"
+                ],
+                correctAnswer: "D"
+            },
+            {
+                question: "SFS delivers high data durability to support rapid service growth. Which advantage is described?",
+                options: [
+                    "A. Easy operation and low costs",
+                    "B. Elastic scaling",
+                    "C. Superior performance and reliability",
+                    "D. Seamless integration"
+                ],
+                correctAnswer: "C"
+            },
+            {
+                question: "Which of the following scenarios happens last in the data rebuild process?",
+                options: [
+                    "A. A physical device fails.",
+                    "B. Data copies are automatically rebuilt and concurrently restored on multiple nodes.",
+                    "C. Data copies are scattered in the storage system.",
+                    "D. The system automatically identifies the failure cause."
+                ],
+                correctAnswer: "B"
+            },
+            {
+                question: "Data in each of the storage classes is separately metered and charged. Which advantage of OBS is described?",
+                options: [
+                    "A. Data durability and service continuity",
+                    "B. Tiered storage and on-demand use",
+                    "C. Multi-level protection and authorization management",
+                    "D. Easy use and management"
+                ],
+                correctAnswer: "B"
+            },
+            {
+                question: "Why can snapshots restore disk states without creating a full copy of the data at snapshot time?",
+                options: [
+                    "A. They store duplicate blocks in OBS.",
+                    "B. They automatically rewrite old data blocks.",
+                    "C. They maintain a relationship to existing disk data.",
+                    "D. They distribute copies across AZs."
+                ],
+                correctAnswer: "C"
+            },
+            {
+                question: "During a disk failure incident, applications continued running with no service interruption. Which mechanism made this possible?",
+                options: [
+                    "A. Cross-region replication",
+                    "B. Multi-bucket striping",
+                    "C. Cloud Eye monitoring",
+                    "D. Three-copy redundancy"
+                ],
+                correctAnswer: "D"
+            },
+            {
+                question: "A server suffers total disk failure, and the storage team must recover data even though the original disk is gone. Which mechanism can still be used for recovery?",
+                options: [
+                    "A. Snapshot",
+                    "B. Backup",
+                    "C. Shared EVS",
+                    "D. Metadata copy"
+                ],
+                correctAnswer: "B"
+            },
+            {
+                question: "A developer attempts to upload several objects and identifies them inside the same storage container even though each object has a unique name. Which structure enables grouping of these objects?",
+                options: [
+                    "A. Bucket",
+                    "B. POSIX volume",
+                    "C. File system root",
+                    "D. VBD mount"
+                ],
+                correctAnswer: "A"
+            },
+            {
+                question: "An analytics application reads large continuous data streams. It does not care about how many I/O calls occur, only that as much data per second is transferred. Which performance metric is most important when choosing an EVS disk?",
+                options: [
+                    "A. IOPS",
+                    "B. Read/Write I/O Latency",
+                    "C. Bandwidth",
+                    "D. Throughput"
+                ],
+                correctAnswer: "D"
+            },
+
+
+            // --- PREVIOUS QUESTIONS (Set 2) ---
+            {
+                question: "It allows you to create rules to control traffic in and out of one or more subnets.",
+                options: [
+                    "A. Elastic IP",
+                    "B. Route table",
+                    "C. Virtual IP address",
+                    "D. Network ACL"
+                ],
+                correctAnswer: "D"
+            },
+            {
+                question: "It combines the scalability of VMs with the high performance of physical servers and provides dedicated servers on the cloud.",
+                options: [
+                    "A. Elastic Cloud Server",
+                    "B. Bare Metal Server",
+                    "C. Image Management Service",
+                    "D. Auto Scaling"
+                ],
+                correctAnswer: "B"
+            },
+            {
+                question: "It refers to how the server cabinet is cabled up.",
+                options: [
+                    "A. Top-of-Rack",
+                    "B. Virtual Private Cloud",
+                    "C. InfiniBand",
+                    "D. Virtual Local Area Network"
+                ],
+                correctAnswer: "A"
+            },
+            {
+                question: "It is a basic computing unit that consists of vCPUs, memory, and OS.",
+                options: [
+                    "A. Elastic Cloud Server",
+                    "B. Bare Metal Server",
+                    "C. Image Management Service",
+                    "D. Auto Scaling"
+                ],
+                correctAnswer: "A"
+            },
+            {
+                question: "This service enables your cloud resources to communicate with the Internet using static public IP addresses and scalable bandwidths.",
+                options: [
+                    "A. Subnet",
+                    "B. Elastic IP",
+                    "C. IP address group",
+                    "D. Virtual IP address"
+                ],
+                correctAnswer: "B"
+            },
+            {
+                question: "This image type is only available to the user who created it.",
+                options: [
+                    "A. Public image",
+                    "B. Private image",
+                    "C. Shared image",
+                    "D. Marketplace image"
+                ],
+                correctAnswer: "B"
+            },
+            {
+                question: "It allows you to create subnets, configure route tables, assign EIPs and bandwidths, and configure security groups.",
+                options: [
+                    "A. NAT Gateway",
+                    "B. Domain Name Service",
+                    "C. Virtual Private Cloud",
+                    "D. Elastic Load Balance"
+                ],
+                correctAnswer: "C"
+            },
+            {
+                question: "It is a server or disk template that contains an OS, service data, and necessary application software.",
+                options: [
+                    "A. Cloud",
+                    "B. Image",
+                    "C. Scale",
+                    "D. Service"
+                ],
+                correctAnswer: "B"
+            },
+            {
+                question: "This image type is a standard image provided by the cloud platform and is available to all users.",
+                options: [
+                    "A. Public image",
+                    "B. Private image",
+                    "C. Shared image",
+                    "D. Marketplace image"
+                ],
+                correctAnswer: "A"
+            },
+            {
+                question: "It automatically distributes incoming traffic across multiple backend servers based on the listening rules you configure.",
+                options: [
+                    "A. Elastic Load Balance",
+                    "B. Virtual Private Cloud",
+                    "C. Virtual Private Network",
+                    "D. NAT Gateway"
+                ],
+                correctAnswer: "A"
+            },
+            {
+                question: "It is a collection of access control rules for ECSs that have the same requirements and are mutually trusted within a VPC.",
+                options: [
+                    "A. Subnet",
+                    "B. Route table",
+                    "C. Security group",
+                    "D. IP address group"
+                ],
+                correctAnswer: "C"
+            },
+            {
+                question: "These images are provided by third-party service providers.",
+                options: [
+                    "A. Public images",
+                    "B. Private images",
+                    "C. Shared images",
+                    "D. Marketplace images"
+                ],
+                correctAnswer: "D"
+            },
+            {
+                question: "It allows you to establish an encrypted, Internet-based communications tunnel between your on-premises data center and a VPC.",
+                options: [
+                    "A. Elastic Load Balance",
+                    "B. Virtual Private Network",
+                    "C. NAT Gateway",
+                    "D. Domain Name Service"
+                ],
+                correctAnswer: "B"
+            },
+            {
+                question: "Which of the following is a virtual network card?",
+                options: [
+                    "A. Network ACL",
+                    "B. Subnet",
+                    "C. Virtual IP address",
+                    "D. Elastic network interface"
+                ],
+                correctAnswer: "D"
+            },
+            {
+                question: "It is used to adjust resources to keep up with changes in demand based on pre-configured policies.",
+                options: [
+                    "A. Elastic Cloud Server",
+                    "B. Bare Metal Server",
+                    "C. Image Management Service",
+                    "D. Auto Scaling"
+                ],
+                correctAnswer: "D"
+            },
+            {
+                question: "When creating an ECS in Huawei CLOUD, which of the following is part of the General computing specifications?",
+                options: [
+                    "A. Pay-per-use",
+                    "B. s6.small.1",
+                    "C. Public image",
+                    "D. General Purpose SSD"
+                ],
+                correctAnswer: "B"
+            },
+            {
+                question: "Which of the following is a CentOS version?",
+                options: [
+                    "A. 2 vCPUs",
+                    "B. AZ5",
+                    "C. 7.9",
+                    "D. s6.small.1"
+                ],
+                correctAnswer: "C"
+            },
+            {
+                question: "When creating an ECS in Huawei CLOUD, which of the following is NOT a billing mode?",
+                options: [
+                    "A. Yearly/Monthly",
+                    "B. Pay-per-use",
+                    "C. Weekly",
+                    "D. Spot price"
+                ],
+                correctAnswer: "C"
+            },
+            {
+                question: "Which is NOT specified when creating a Virtual Private Cloud in Huawei CLOUD?",
+                options: [
+                    "A. VPC Name",
+                    "B. Region",
+                    "C. Operating System",
+                    "D. IPv4 CIDR Block"
+                ],
+                correctAnswer: "C"
+            },
+            {
+                question: "Which of the following is NOT a network cloud service?",
+                options: [
+                    "A. VPC",
+                    "B. BMS",
+                    "C. ELB",
+                    "D. VPN"
+                ],
+                correctAnswer: "B"
+            },
+            {
+                question: "Which is NOT required when logging in as an IAM user in Huawei CLOUD?",
+                options: [
+                    "A. Key pair",
+                    "B. Tenant name or account name",
+                    "C. IAM user name or email address",
+                    "D. IAM user password"
+                ],
+                correctAnswer: "A"
+            },
+            {
+                question: "When creating an ECS in Huawei CLOUD, which of the following is NOT a system disk option?",
+                options: [
+                    "A. General computing",
+                    "B. General purpose",
+                    "C. Ultra-high I/O",
+                    "D. Extreme SSD"
+                ],
+                correctAnswer: "A"
+            },
+            {
+                question: "Which of the following is NOT a compute cloud service?",
+                options: [
+                    "A. DNS",
+                    "B. ECS",
+                    "C. BMS",
+                    "D. IMS"
+                ],
+                correctAnswer: "A"
+            },
+            {
+                question: "Which of the following is NOT required when creating an image in Huawei CLOUD?",
+                options: [
+                    "A. Region",
+                    "B. Image Type",
+                    "C. Image Name",
+                    "D. Availability Zone"
+                ],
+                correctAnswer: "D"
+            },
+            {
+                question: "Which of the following is optional when creating an ECS in Huawei CLOUD?",
+                options: [
+                    "A. ECS Name",
+                    "B. Billing mode",
+                    "C. ECS Group",
+                    "D. Availability Zone"
+                ],
+                correctAnswer: "C"
+            },
+            {
+                question: "When creating an ECS in Huawei CLOUD, which of the following is NOT a public image option?",
+                options: [
+                    "A. CentOS",
+                    "B. Ubuntu",
+                    "C. Debian",
+                    "D. Kunpeng"
+                ],
+                correctAnswer: "D"
+            },
+            {
+                question: "Which is NOT specified when creating a subnet in Huawei CLOUD?",
+                options: [
+                    "A. VPC",
+                    "B. Subnet Name",
+                    "C. IPv4 CIDR Block",
+                    "D. Billing Mode"
+                ],
+                correctAnswer: "D"
+            },
+            {
+                question: "When creating an ECS in Huawei CLOUD, which of the following is NOT an EIP option?",
+                options: [
+                    "A. Auto assign",
+                    "B. Create VPC",
+                    "C. Use existing",
+                    "D. Not required"
+                ],
+                correctAnswer: "B"
+            },
+            {
+                question: "When creating a Linux ECS in Huawei CLOUD, what is the default username?",
+                options: [
+                    "A. admin",
+                    "B. administrator",
+                    "C. user",
+                    "D. root"
+                ],
+                correctAnswer: "D"
+            },
+            {
+                question: "Which Linux command allows you to remotely log in to another ECS?",
+                options: [
+                    "A. ping",
+                    "B. ssh",
+                    "C. root",
+                    "D. netstat"
+                ],
+                correctAnswer: "B"
+            },
+            {
+                question: "Which ECS type is classified into G series for 3D animation rendering and CAD and P series for deep learning and scientific computing?",
+                options: [
+                    "A. General-purpose ECS",
+                    "B. Graphics-accelerated ECS",
+                    "C. Disk-intensive ECS",
+                    "D. Memory-optimized ECS"
+                ],
+                correctAnswer: "B"
+            },
+            {
+                question: "Which VPN protocol uses authentication and encryption to provide secure communications between different networks in Huawei CLOUD?",
+                options: [
+                    "A. PPTP",
+                    "B. L2TP",
+                    "C. IPsec",
+                    "D. GRE"
+                ],
+                correctAnswer: "C"
+            },
+            {
+                question: "Which connectivity option allows two VPCs in the same region to communicate using private IP addresses?",
+                options: [
+                    "A. Elastic IP",
+                    "B. VPC Peering",
+                    "C. NAT Gateway",
+                    "D. Direct Connect"
+                ],
+                correctAnswer: "B"
+            },
+            {
+                question: "Which ELB feature ensures client requests remain tied to the same backend server for the duration of a session?",
+                options: [
+                    "A. Cross-AZ balancing",
+                    "B. Sticky sessions",
+                    "C. Health checks",
+                    "D. Weighted server distribution"
+                ],
+                correctAnswer: "B"
+            },
+            {
+                question: "Which ECS type is best suited for large-scale parallel data processing and log analysis, due to its support for up to 24 local disks, 48 vCPUs, and 384 GiB of memory?",
+                options: [
+                    "A. Memory-optimized ECS",
+                    "B. Disk-intensive ECS",
+                    "C. GPU-accelerated ECS",
+                    "D. General computing ECS"
+                ],
+                correctAnswer: "B"
+            },
+
+
+            // --- PREVIOUS QUESTIONS (Set 1) ---
+            {
+                question: "In this service model, the cloud services purchased by a user include an application running environment, but do not contain any application or related data.",
+                options: [
+                    "A. IaaS",
+                    "B. PaaS",
+                    "C. SaaS",
+                    "D. NaaS"
+                ],
+                correctAnswer: "B"
+            },
+            {
+                question: "Which of the following is also known as the Virtual Machine Monitor (VMM)?",
+                options: [
+                    "A. Host OS",
+                    "B. Guest OS",
+                    "C. Hypervisor",
+                    "D. Hardware"
+                ],
+                correctAnswer: "C"
+            },
+            {
+                question: "It is the combination of public cloud and private cloud.",
+                options: [
+                    "A. Community cloud",
+                    "B. Government cloud",
+                    "C. Market cloud",
+                    "D. Hybrid cloud"
+                ],
+                correctAnswer: "D"
+            },
+            {
+                question: "Each VM is saved as a group of hardware-independent files. Which of the following features of virtualization technology is reflected by the preceding description?",
+                options: [
+                    "A. Partitioning",
+                    "B. Isolation",
+                    "C. Encapsulation",
+                    "D. Independence"
+                ],
+                correctAnswer: "C"
+            },
+            {
+                question: "This cloud computing characteristic is also known as standardization.",
+                options: [
+                    "A. Elastic computing",
+                    "B. Massive scale",
+                    "C. Homogeneity",
+                    "D. Virtualization"
+                ],
+                correctAnswer: "D"
+            },
+            {
+                question: "What does P in PaaS stand for?",
+                options: [
+                    "A. Platform",
+                    "B. Program",
+                    "C. People",
+                    "D. Provider"
+                ],
+                correctAnswer: "A"
+            },
+            {
+                question: "What does I in IaaS stand for?",
+                options: [
+                    "A. Information",
+                    "B. Infrastructure",
+                    "C. Industry",
+                    "D. Instruction"
+                ],
+                correctAnswer: "B"
+            },
+            {
+                question: "This feature implies that the hypervisor is capable of allocating server resources to multiple virtual machines.",
+                options: [
+                    "A. Partitioning",
+                    "B. Isolation",
+                    "C. Encapsulation",
+                    "D. Independence"
+                ],
+                correctAnswer: "A"
+            },
+            {
+                question: "It must be adopted to protect cloud computing.",
+                options: [
+                    "A. Massive scale",
+                    "B. Service orientation",
+                    "C. Advanced security technology",
+                    "D. Elastic computing"
+                ],
+                correctAnswer: "C"
+            },
+            {
+                question: "It is the technology that enables users to obtain IT resources anytime and anywhere.",
+                options: [
+                    "A. Cloud computing",
+                    "B. Distributed computing",
+                    "C. Grid computing",
+                    "D. Parallel computing"
+                ],
+                correctAnswer: "A"
+            },
+            {
+                question: "It simulates hardware functionalities and creates multiple machines on a physical server.",
+                options: [
+                    "A. Big data",
+                    "B. Artificial intelligence",
+                    "C. Cloud computing",
+                    "D. Virtualization"
+                ],
+                correctAnswer: "D"
+            },
+            {
+                question: "This cloud computing characteristic implies that IT services can be provided anytime and anywhere.",
+                options: [
+                    "A. Massive scale",
+                    "B. Geographic distribution",
+                    "C. Elastic computing",
+                    "D. Service orientation"
+                ],
+                correctAnswer: "B"
+            },
+            {
+                question: "It is a physical computer that can run multiple virtual machines.",
+                options: [
+                    "A. Host machine",
+                    "B. Guest machine",
+                    "C. Hypervisor",
+                    "D. Virtual Machine Manager"
+                ],
+                correctAnswer: "A"
+            },
+            {
+                question: "Which of the following is an open-source virtualization technology?",
+                options: [
+                    "A. Hyper-V",
+                    "B. KVM",
+                    "C. vSphere",
+                    "D. FusionCompute"
+                ],
+                correctAnswer: "B"
+            },
+            {
+                question: "It is the virtual machine running on a host machine.",
+                options: [
+                    "A. Host operating system",
+                    "B. Guest machine",
+                    "C. Hypervisor",
+                    "D. Virtual machine manager"
+                ],
+                correctAnswer: "B"
+            },
+            {
+                question: "Which of the following is TRUE about the on-demand self-service feature of cloud computing?",
+                options: [
+                    "A. The cloud computing providers only need to prepare the cloud servers. Users will complete the remaining process all by themselves.",
+                    "B. When using cloud computing resources, users need to solve problems all by themselves.",
+                    "C. Users do not need to communicate with service providers at all when using cloud computing resources.",
+                    "D. After determining the required computing resources, users can apply for cloud computing resources by themselves."
+                ],
+                correctAnswer: "D"
+            },
+            {
+                question: "Which best describes compute services?",
+                options: [
+                    "A. These services package software into standardized units for development.",
+                    "B. These services create multiple VMs that share the hardware resources of a physical server.",
+                    "C. These services provide resource connectivity and isolation.",
+                    "D. These services provide the computing power required for running services."
+                ],
+                correctAnswer: "D"
+            },
+            {
+                question: "If a VM on a physical host is faulty, other VMs on the physical host are not affected. Which of the following features of virtualization technology is reflected by the preceding description?",
+                options: [
+                    "A. Partitioning",
+                    "B. Isolation",
+                    "C. Encapsulation",
+                    "D. Independence"
+                ],
+                correctAnswer: "B"
+            },
+            {
+                question: "Which best describes what containers are?",
+                options: [
+                    "A. These are used to package software into standardized units for development.",
+                    "B. These are used to create multiple VMs that share the hardware resources of a physical server.",
+                    "C. These services provide resource connectivity and isolation.",
+                    "D. These services provide the computing power required for running services."
+                ],
+                correctAnswer: "A"
+            },
+            {
+                question: "Which of the following is the difference between the public cloud and the private cloud?",
+                options: [
+                    "A. The public cloud has industry attributes, but the private cloud does not.",
+                    "B. The private cloud has industry attributes, but the public cloud does not.",
+                    "C. The public cloud is open to the public, while the private cloud is open to specific users.",
+                    "D. Public cloud services need to be paid, while private cloud services are free of charge."
+                ],
+                correctAnswer: "C"
+            },
+            {
+                question: "Which best describes network services?",
+                options: [
+                    "A. These services package software into standardized units for development.",
+                    "B. These services create multiple VMs that share the hardware resources of a physical server.",
+                    "C. These services provide resource connectivity and isolation.",
+                    "D. These services provide the computing power required for running services."
+                ],
+                correctAnswer: "C"
+            },
+            {
+                question: "Which of the following statements best describes the role of a Distributed Virtual Switch (DVS)?",
+                options: [
+                    "A. It limits VM communication to a single physical server by isolating traffic within the same host.",
+                    "B. It replaces the need for virtual NICs by enabling VMs to connect directly to external physical switches.",
+                    "C. It connects VMs and external networks similarly to a physical switch, simplifying network management.",
+                    "D. It is a virtual router that handles IP assignment and DNS resolution between VMs and external networks."
+                ],
+                correctAnswer: "C"
+            },
+            {
+                question: "Which of the following is NOT a feature of hypervisors?",
+                options: [
+                    "A. Partitioning",
+                    "B. CPU Instruction",
+                    "C. Encapsulation",
+                    "D. Isolation"
+                ],
+                correctAnswer: "B"
+            },
+            {
+                question: "Which of the following is TRUE about cloud computing?",
+                options: [
+                    "A. Cloud computing is a technology that enables users to obtain IT resources anytime and anywhere.",
+                    "B. Various IT resources of cloud computing can be used only after being paid.",
+                    "C. The IT resources of cloud computing can be used only through network connections.",
+                    "D. During the process of obtaining IT resources, users need to repeatedly negotiate with cloud computing service providers."
+                ],
+                correctAnswer: "A"
+            },
+            {
+                question: "How do e-Gov cloud online services improve the handling of documents?",
+                options: [
+                    "A. Intelligent Process Automation (IPA) robots are provided.",
+                    "B. Based on big data and AI technologies, fields in documents are auto-populated.",
+                    "C. AI technologies pre-examine documents.",
+                    "D. All application and service entries are managed in a unified manner."
+                ],
+                correctAnswer: "D"
+            },
+            {
+                question: "Which of the following does NOT reflect the self-service feature of cloud computing?",
+                options: [
+                    "A. Engineer A purchases an ECS from Huawei cloud to meet his/her own requirements.",
+                    "B. Engineer B changes the operating system of the ECS purchased by himself/herself from Linux to Windows.",
+                    "C. Engineer C increases the number of CPUs of the ECS purchased by himself/herself from 2 to 4.",
+                    "D. Engineer D receives an SMS notification from the cloud service provider one week before the ECS expires."
+                ],
+                correctAnswer: "D"
+            },
+            {
+                question: "How do E-Gov cloud online services guide users?",
+                options: [
+                    "A. Intelligent Process Automation (IPA) robots are provided.",
+                    "B. Based on big data and AI technologies, fields in documents are auto-populated.",
+                    "C. AI technologies pre-examine documents.",
+                    "D. All application and service entries are managed in a unified manner."
+                ],
+                correctAnswer: "D"
+            },
+            {
+                question: "How do E-Gov cloud online services improve the review of documents?",
+                options: [
+                    "A. Intelligent Process Automation (IPA) robots are provided.",
+                    "B. Based on big data and AI technologies, fields in documents are auto-populated.",
+                    "C. AI technologies pre-examine documents.",
+                    "D. All application and service entries are managed in a unified manner."
+                ],
+                correctAnswer: "C"
+            },
+            {
+                question: "How do E-Gov cloud online services improve collaboration?",
+                options: [
+                    "A. Intelligent Process Automation (IPA) robots are provided.",
+                    "B. Based on big data and AI technologies, fields in documents are auto-populated.",
+                    "C. AI technologies pre-examine documents.",
+                    "D. All application and service entries are managed in a unified manner."
+                ],
+                correctAnswer: "D"
+            },
+            {
+                question: "Which best describes what virtualization is?",
+                options: [
+                    "A. It is used to package software into standardized units for development.",
+                    "B. It is the process of creating multiple VMs that share the hardware resources of a physical server.",
+                    "C. It provides resource connectivity and isolation.",
+                    "D. It provides the computing power required for running services."
+                ],
+                correctAnswer: "B"
+            },
+            {
+                question: "Which of the following best explains why containers are referred to as lightweight virtualization?",
+                options: [
+                    "A. They require less data transfer between physical servers.",
+                    "B. They do not use a virtualization layer and run directly on a shared OS kernel.",
+                    "C. They abstract hardware into multiple OS environments.",
+                    "D. They run without using any memory or CPU."
+                ],
+                correctAnswer: "B"
+            },
+            {
+                question: "What capability allows containers to consume fewer resources compared to virtual machines?",
+                options: [
+                    "A. They share the host OS kernel, eliminating the need for full OS replication.",
+                    "B. They rely on dedicated hardware instead of shared resources.",
+                    "C. They run multiple kernels in parallel to boost performance.",
+                    "D. They require BIOS-level virtualization to bypass the hypervisor."
+                ],
+                correctAnswer: "A"
+            },
+            {
+                question: "What does Auto Scaling enable in cloud environments during fluctuating workloads?",
+                options: [
+                    "A. Manual reallocation of static resources",
+                    "B. Gradual backup of file systems",
+                    "C. Scheduled shutdown of idle servers",
+                    "D. Dynamic adjustment of compute capacity"
+                ],
+                correctAnswer: "D"
+            },
+            {
+                question: "Which of the following best explains why traditional IT systems struggle with scalability?",
+                options: [
+                    "A. Traditional systems have too many network nodes.",
+                    "B. Centralized architecture can only enhance the performance of one node at a time.",
+                    "C. All components are cloud-based, requiring constant updates.",
+                    "D. Distributed systems are inherently complex."
+                ],
+                correctAnswer: "B"
+            },
+            {
+                question: "Why is object storage often more efficient than file storage for massive data searches?",
+                options: [
+                    "A. It uses NFS or CIFS protocols optimized for high-speed access.",
+                    "B. It stores files in a tree-based hierarchy to enable easy sorting.",
+                    "C. It compresses all data files into one logical container for retrieval.",
+                    "D. It provides a flat structure that maintains search speed regardless of scale."
+                ],
+                correctAnswer: "D"
+            }
+        ];
+
+        // 2. DOM Elements and State Variables
+        const questionTextEl = document.getElementById('question-text');
+        const optionsContainer = document.getElementById('options-container');
+        const nextButton = document.getElementById('next-button');
+        const cardCounterEl = document.getElementById('card-counter');
+        const feedbackMessageEl = document.getElementById('feedback-message');
+
+        let currentCardIndex = 0;
+        let answeredCorrectly = false; // Tracks if the current question has been answered correctly
+        
+        // Helper function to extract the letter key (A, B, C, D) from the option text
+        function getOptionKey(optionText) {
+            return optionText.charAt(0);
+        }
+
+        // 3. Functions
+        function loadQuestion() {
+            if (quizData.length === 0) {
+                questionTextEl.textContent = "Quiz data is empty. Please check the data source.";
+                return;
+            }
+
+            const card = quizData[currentCardIndex];
+            
+            // 1. Reset state
+            answeredCorrectly = false;
+            optionsContainer.innerHTML = '';
+            feedbackMessageEl.textContent = '';
+            
+            // Ensure Next Button is disabled until correct answer is chosen
+            nextButton.classList.remove('active');
+            nextButton.setAttribute('disabled', 'true');
+            nextButton.textContent = "Next Question"; // Reset button text
+            
+            // 2. Display Question & Counter
+            questionTextEl.textContent = card.question;
+            cardCounterEl.textContent = `Question ${currentCardIndex + 1} of ${quizData.length}`;
+            
+            // 3. Create Option Buttons
+            card.options.forEach(optionText => {
+                const li = document.createElement('li');
+                const button = document.createElement('button');
+                
+                button.className = 'option-button';
+                button.textContent = optionText;
+                button.dataset.key = getOptionKey(optionText); // Store the key (A, B, C, D)
+                button.addEventListener('click', checkAnswer);
+                
+                li.appendChild(button);
+                optionsContainer.appendChild(li);
+            });
+
+            if (currentCardIndex === quizData.length - 1 && answeredCorrectly) {
+                nextButton.textContent = "Finish/Restart Quiz";
+            }
+        }
+
+        function checkAnswer(event) {
+            const selectedButton = event.target;
+            
+            // Prevent double-checking
+            if (selectedButton.classList.contains('attempted-incorrect') || selectedButton.classList.contains('correct')) {
+                return;
+            }
+            
+            const selectedKey = selectedButton.dataset.key;
+            const correctKey = quizData[currentCardIndex].correctAnswer;
+            
+            // Disable only the clicked button temporarily
+            selectedButton.classList.add('disabled');
+            
+            // Provide feedback
+            if (selectedKey === correctKey) {
+                answeredCorrectly = true;
+                
+                // Highlight CORRECT answer and disable all options permanently for this question
+                Array.from(optionsContainer.children).forEach(li => {
+                    const button = li.querySelector('.option-button');
+                    button.removeEventListener('click', checkAnswer);
+                    button.classList.add('disabled'); // Disable all permanently
+                    if (button.dataset.key === correctKey) {
+                        button.classList.add('correct');
+                    }
+                });
+                
+                feedbackMessageEl.textContent = "✅ Correct! Click Next Question to continue.";
+                
+                // Enable Next button ONLY on correct answer
+                nextButton.classList.add('active');
+                nextButton.removeAttribute('disabled');
+
+                if (currentCardIndex === quizData.length - 1) {
+                    nextButton.textContent = "Finish/Restart Quiz";
+                }
+                
+            } else {
+                answeredCorrectly = false;
+                selectedButton.classList.add('attempted-incorrect');
+                selectedButton.classList.remove('disabled'); // Re-enable for the next attempt
+                selectedButton.removeEventListener('click', checkAnswer); // Ensure this specific option can't be clicked again
+                
+                feedbackMessageEl.textContent = "❌ Incorrect. Try another answer! The one you chose is now disabled.";
+                
+                // Next Button remains disabled
+                nextButton.classList.remove('active');
+                nextButton.setAttribute('disabled', 'true');
+            }
+        }
+
+        function nextQuestion() {
+            // Only proceed if the question was answered correctly
+            if (!answeredCorrectly) {
+                return;
+            }
+            
+            if (currentCardIndex < quizData.length - 1) {
+                currentCardIndex++;
+                loadQuestion();
+            } else {
+                // Quiz finished, wrap around or show score (for simplicity, we wrap)
+                alert(`Quiz Finished! You completed all ${quizData.length} questions. Restarting now.`);
+                currentCardIndex = 0; // Reset for restart
+                loadQuestion();
+            }
+        }
+
+        // 4. Event Listeners
+        nextButton.addEventListener('click', nextQuestion);
+
+        // 5. Initial Load
+        loadQuestion();
+        nextButton.textContent = "Start Quiz";
+    </script>
+</body>
+</html>

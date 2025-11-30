@@ -1,0 +1,1361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Master Privacy & Security Quiz (88 Questions)</title>
+    
+    <style>
+        /* CSS (Updated for Quiz structure) */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            color: #333;
+        }
+
+        .container {
+            background: #fff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 90%;
+            max-width: 700px;
+        }
+
+        h1 {
+            color: #007bff;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+
+        .counter {
+            margin-bottom: 15px;
+            font-weight: 600;
+            color: #666;
+        }
+
+        /* Quiz Card & Content Styles */
+        .quiz-card {
+            background-color: #e6f2ff;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 25px;
+            text-align: left;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            min-height: 250px; 
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        #question-text {
+            font-size: 1.2em;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        /* Option Buttons */
+        .options-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .option-button {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: #fff;
+            text-align: left;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background-color 0.2s, border-color 0.2s;
+        }
+
+        .option-button:hover:not(.disabled):not(.incorrect) {
+            background-color: #f0f0f0;
+            border-color: #007bff;
+        }
+
+        /* Feedback Colors */
+        .option-button.correct {
+            background-color: #28a745; /* Green */
+            color: white;
+            border-color: #1e7e34;
+            font-weight: bold;
+            pointer-events: none; /* Disable correctly selected option */
+        }
+
+        .option-button.incorrect {
+            background-color: #dc3545; /* Red */
+            color: white;
+            border-color: #c82333;
+            font-weight: bold;
+            opacity: 0.8;
+            pointer-events: none; /* Disable incorrectly selected option */
+        }
+        
+        .option-button.disabled {
+            cursor: default;
+            opacity: 0.7;
+            pointer-events: none; /* Disable when checking/moving on */
+        }
+        
+        /* New class for currently wrong answer, allowing retry */
+        .option-button.attempted-incorrect {
+            background-color: #dc3545; /* Red */
+            color: white;
+            border-color: #c82333;
+            font-weight: bold;
+            pointer-events: none; /* Temporarily disable the just-clicked button */
+        }
+
+
+        /* Feedback Message */
+        #feedback-message {
+            margin-top: 15px;
+            font-size: 1.1em;
+            font-weight: bold;
+            min-height: 1.5em;
+        }
+
+        /* Navigation Button */
+        #next-button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 600;
+            transition: background-color 0.3s, transform 0.1s;
+            box-shadow: 0 3px #0056b3;
+            opacity: 0.5; /* Disabled visually at start */
+            pointer-events: none; /* Disabled functionally at start */
+        }
+
+        #next-button.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        #next-button.active:hover {
+            background-color: #0056b3;
+        }
+
+        #next-button.active:active {
+            transform: translateY(2px);
+            box-shadow: 0 1px #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Info Ass Prelim To Prefinal</h1>
+        <div id="card-counter" class="counter">Question 1 of 88</div>
+
+        <div class="quiz-card">
+            <div id="question-text">Click "Next Question" to start!</div>
+            
+            <ul id="options-container" class="options-list">
+                </ul>
+
+            <div id="feedback-message"></div>
+        </div>
+
+        <button id="next-button" disabled>Next Question</button>
+    </div>
+
+    <script>
+        // JAVASCRIPT (Master Quiz Data)
+        
+        const quizData = [
+            {
+                question: "This principle indicates that privacy should be integral both to the design and architecture of IT systems and to business practices.",
+                options: [
+                    "A. Privacy embedded into the design",
+                    "B. Proactive, not reactive; preventive, not remedial",
+                    "C. Visibility and transparency",
+                    "D. Respect for user privacy"
+                ],
+                correctAnswer: "A"
+            },
+            {
+                question: "This privacy issue pertains to the responsibility of those who have data to control and who can use that data.",
+                options: [
+                    "A. Accuracy issue",
+                    "B. Property issue",
+                    "C. Access issue",
+                    "D. Connection issue"
+                ],
+                correctAnswer: "C"
+            },
+            {
+                question: "This refers to system requirements that have privacy relevance.",
+                options: [
+                    "A. Privacy Requirements",
+                    "B. Privacy by Design",
+                    "C. Privacy Engineering",
+                    "D. Privacy Development"
+                ],
+                correctAnswer: "A"
+            },
+            {
+                question: "It refers to any information, whether recorded in a material form or not, from which the identity of an individual is apparent or can be directly ascertained by the entity holding the information.",
+                options: [
+                    "A. Data Privacy",
+                    "B. Personal Data",
+                    "C. Data Security",
+                    "D. Data Management"
+                ],
+                correctAnswer: "B"
+            },
+            {
+                question: "This pertains to stealing of data or confidential information by electronic means, including ransomware and hacking.",
+                options: [
+                    "A. Cyberattack",
+                    "B. Phishing/SQL Injection Data Breach",
+                    "C. SQL Injection",
+                    "D. Data Breach"
+                ],
+                correctAnswer: "A"
+            },
+            {
+                question: "What does PII stand for?",
+                options: [
+                    "A. Personal Identity Information",
+                    "B. Personal Information Identity",
+                    "C. Personally Identifiable Information",
+                    "D. Personally Integral Information"
+                ],
+                correctAnswer: "C" 
+            },
+            {
+                question: "This pertains to the proper handling of data, with the focus on compliance with data protection regulations.",
+                options: [
+                    "A. Data Security",
+                    "B. CIA Triad",
+                    "C. Data Privacy",
+                    "D. Personal Information"
+                ],
+                correctAnswer: "C"
+            },
+            {
+                question: "This principle seeks to assure users that privacy-related business practices are operating according to state commitments and objectives.",
+                options: [
+                    "A. Privacy embedded into the design",
+                    "B. Proactive, not reactive; preventive, not remedial",
+                    "C. Visibility and transparency",
+                    "D. Respect for user privacy"
+                ],
+                correctAnswer: "C"
+            },
+            {
+                question: "What does PbD stand for?",
+                options: [
+                    "A. Principle by Design",
+                    "B. Privacy by Default",
+                    "C. Privacy by Design",
+                    "D. Personal by Design"
+                ],
+                correctAnswer: "C"
+            },
+            {
+                question: "This privacy issue pertains to the responsibility of those who collect data to ensure that the data is correct.",
+                options: [
+                    "A. Accuracy issue",
+                    "B. Property issue",
+                    "C. Access issue",
+                    "D. Connection issue"
+                ],
+                correctAnswer: "A"
+            },
+            {
+                question: "It is an unauthorized or unintentional disclosure of confidential information.",
+                options: [
+                    "A. Phishing",
+                    "B. Cyberattack",
+                    "C. SQL Injection",
+                    "D. Data Breach"
+                ],
+                correctAnswer: "D"
+            },
+            {
+                question: "What does PIA stand for?",
+                options: [
+                    "A. Privacy Impact Assessment",
+                    "B. Privacy Information Assessment",
+                    "C. Privacy Issue Assessment",
+                    "D. Privacy Implementation Assessment"
+                ],
+                correctAnswer: "A"
+            },
+            {
+                question: "In this principle, designers should seek solutions that avoid requiring a trade-off between privacy and system functionality or between privacy and security.",
+                options: [
+                    "A. Visibility and transparency",
+                    "B. Privacy as the default",
+                    "C. Full functionality: positive-sum, not zero-sum",
+                    "D. Respect for user privacy"
+                ],
+                correctAnswer: "C"
+            },
+            {
+                question: "This model is designed to guide an organization's policies on information security.",
+                options: [
+                    "A. Privacy and security model",
+                    "B. CIA Triad",
+                    "C. Elements of data privacy",
+                    "D. Data management model"
+                ],
+                correctAnswer: "B"
+            },
+            {
+                question: "In CIA Triad, this element ensures that data is accessed only by authorized individuals.",
+                options: [
+                    "A. Availability",
+                    "B. Integrity",
+                    "C. Confidentiality",
+                    "D. Connectivity"
+                ],
+                correctAnswer: "C"
+            },
+            {
+                question: "In dealing with the privacy of PII, which of the following concept takes privacy requirements into account throughout the system development process?",
+                options: [
+                    "A. Privacy Requirements",
+                    "B. Privacy Engineering",
+                    "C. Privacy Development",
+                    "D. Privacy by Design"
+                ],
+                correctAnswer: "D"
+            },
+            {
+                question: "Which of the following statements best describes privacy impact assessment?",
+                options: [
+                    "A. It is an expectation of loss expressed as the probability that a particular threat will exploit a particular vulnerability with a particular harmful result.",
+                    "B. It is an analysis of how information is handled, to ensure handling conforms to applicable legal and regulatory.",
+                    "C. It includes a disciplined, structured, and flexible process for organizational asset valuation.",
+                    "D. It is derived from various sources, including laws, regulations, standards, and stakeholder expectations."
+                ],
+                correctAnswer: "B"
+            },
+            {
+                question: "Which of the following statements best describes risk management?",
+                options: [
+                    "A. It is an expectation of loss expressed as the probability that a particular threat will exploit a particular vulnerability with a particular harmful result.",
+                    "B. It is an analysis of how information is handled, to ensure handling conforms to applicable legal and regulatory.",
+                    "C. It includes a disciplined, structured, and flexible process for organizational asset valuation.",
+                    "D. It is derived from various sources, including laws, regulations, standards, and stakeholder expectations."
+                ],
+                correctAnswer: "A"
+            },
+            {
+                question: "Which of the following statements best describes Personally Identifiable Information (PII)?",
+                options: [
+                    "A. It is information that takes privacy requirements into account.",
+                    "B. It is information that can be used to distinguish an individual's identity.",
+                    "C. It is considered an important aspect of information sharing.",
+                    "D. It is a set of standards in information privacy."
+                ],
+                correctAnswer: "B"
+            },
+            {
+                question: "In the CIA triad, which of the following best describes Availability?",
+                options: [
+                    "A. It is an element of data security that ensures data is accessed only by authorized individuals.",
+                    "B. It is an element of data security that ensures information is reliable as well as accurate.",
+                    "C. It is an element of data security that ensures data is both available and accessible to satisfy business needs.",
+                    "D. It is an element of data security that ensures information is focused on compliance with data protection."
+                ],
+                correctAnswer: "C"
+            },
+            {
+                question: "In the CIA triad, which of the following best describes confidentiality?",
+                options: [
+                    "A. It is an element of data security that ensures data is accessed only by authorized individuals.",
+                    "B. It is an element of data security that ensures information is reliable as well as accurate.",
+                    "C. It is an element of data security that ensures data is both available and accessible to satisfy business needs.",
+                    "D. It is an element of data security that ensures information is focused on compliance with data protection."
+                ],
+                correctAnswer: "A"
+            },
+            {
+                question: "Which of the following statements best describes privacy control?",
+                options: [
+                    "A. It is a countermeasure that is designed to protect the confidentiality, integrity, and availability of its information.",
+                    "B. It is a technical, physical, and administrative measure employed within an organization to satisfy privacy requirements.",
+                    "C. It is a privacy protection measure that encompasses the implementation and deployment of a control system.",
+                    "D. It is a countermeasure that involves the risk assessment process from potential vulnerabilities."
+                ],
+                correctAnswer: "B"
+            },
+            {
+                question: "Which of the following is NOT a valid statement about information privacy?",
+                options: [
+                    "A. Information privacy includes the regulations required for companies to protect data.",
+                    "B. Information privacy may be applied in numerous ways, including encryption, authentication, and data masking.",
+                    "C. Information privacy is a set of standards in data security.",
+                    "D. Information privacy is considered an important aspect of information sharing."
+                ],
+                correctAnswer: "C"
+            },
+            {
+                question: "Which of the following statements best describes privacy risk assessment?",
+                options: [
+                    "A. It describes the overall assessment process of information privacy.",
+                    "B. It enables organizations to implement privacy controls that optimize the level of protection within the budget.",
+                    "C. It is a privacy protection process that helps an organization achieve its goals.",
+                    "D. It is a PbD principle that enables an organization to measure the overall privacy risk."
+                ],
+                correctAnswer: "B"
+            },
+            {
+                question: "In data security, which of the following is NOT a valid statement?",
+                options: [
+                    "A. Data security prevents any third party from unauthorized access.",
+                    "B. Data security focuses on the rights of individuals.",
+                    "C. Data security prevents any unintentional or unintentional alteration, deletion, or data disclosure.",
+                    "D. Data security includes a set of standards and different safeguards and countermeasures to an organization."
+                ],
+                correctAnswer: "B"
+            },
+            {
+                question: "Which of the following is a valid statement about data privacy?",
+                options: [
+                    "A. Data privacy prevents any unintentional or unintentional alteration, deletion, or data disclosure under the law.",
+                    "B. Data privacy focuses on how to collect, process, share, archive, and delete the data under the law.",
+                    "C. Data privacy is a model designed to guide an organization's policies on information security.",
+                    "D. Data privacy is considered one of the important aspects of information sharing."
+                ],
+                correctAnswer: "B"
+            },
+            {
+                question: "Which of the following is NOT a part of the three (3) primary privacy issues?",
+                options: [
+                    "A. Accuracy",
+                    "B. Property",
+                    "C. Access",
+                    "D. Security"
+                ],
+                correctAnswer: "D"
+            },
+            {
+                question: "Which of the following is NOT part of the three (3) elements of data security?",
+                options: [
+                    "A. Availability",
+                    "B. Integrity",
+                    "C. Authentication",
+                    "D. Confidentiality"
+                ],
+                correctAnswer: "C"
+            },
+            {
+                question: "Which of the following statements best describes personal data?",
+                options: [
+                    "A. It is information whether recorded in a material form or not, from which the identity of a person can be directly ascertained.",
+                    "B. It is part of the data protected area that deals with the proper handling of data.",
+                    "C. It is considered the area of privacy and can encompass such a wide range of information.",
+                    "D. It is data that focuses on the rights of individuals."
+                ],
+                correctAnswer: "A"
+            },
+            {
+                question: "Which of the following statements best describes security risk assessment?",
+                options: [
+                    "A. It is an expectation of loss expressed as the probability that a particular threat will exploit a particular vulnerability with a particular harmful result.",
+                    "B. It is an analysis of how information is handled, to ensure handling conforms to applicable legal and regulatory.",
+                    "C. It includes a disciplined, structured, and flexible process for organizational asset valuation.",
+                    "D. It is derived from various sources, including laws, regulations, standards, and stakeholder expectations."
+                ],
+                correctAnswer: "A"
+            },
+            {
+                question: "Which best describes privacy requirements?",
+                options: [
+                    "A. These are derived from various sources, including laws, regulations, standards, and stakeholder expectations.",
+                    "B. These are analysis of how information is handled, to ensure handling conforms to applicable legal and regulatory.",
+                    "C. These include disciplined, structured, and flexible processes for organizational asset valuation.",
+                    "D. These are expressed as the probability that a particular threat will exploit a particular vulnerability with a particular harmful result."
+                ],
+                correctAnswer: "A"
+            },
+            {
+                question: "Which of the following is NOT a privacy goal of privacy engineering?",
+                options: [
+                    "A. Mitigate the impact of breach of personal data.",
+                    "B. Prevent compromise of PII.",
+                    "C. Incorporate functionality and management practices to satisfy privacy requirements.",
+                    "D. Measure the process of PbD."
+                ],
+                correctAnswer: "D"
+            },
+            {
+                question: "Which of the following statements best describes privacy engineering?",
+                options: [
+                    "A. It is a technical, physical, and administrative measure employed within an organization to satisfy privacy requirements.",
+                    "B. It involves taking account of privacy during the entire life cycle of ICT.",
+                    "C. It is a privacy protection measure that encompasses the implementation and deployment of a control system.",
+                    "D. It is a countermeasure that involves the risk assessment process from potential vulnerabilities."
+                ],
+                correctAnswer: "B"
+            },
+            {
+                question: "Which of the following is NOT a valid statement about data privacy and data security?",
+                options: [
+                    "A. Data privacy and data security are often used interchangeably.",
+                    "B. There are distinct differences between data privacy and data security.",
+                    "C. Data security protects the identity while data privacy protects the data.",
+                    "D. Data privacy focuses on the rights of individuals, while data security focuses on the safeguards and security measures."
+                ],
+                correctAnswer: "C"
+            },
+            {
+                question: "Which of the following is NOT a valid statement about the CIA triad?",
+                options: [
+                    "A. CIA triad is a model designed to guide an organization's policies on information security.",
+                    "B. The elements of the CIA triad are considered crucial components of security.",
+                    "C. CIA triad is a security model that highlights core data security objectives.",
+                    "D. CIA triad is the process of ingesting, storing, organizing, and maintaining the data created and collected by an organization."
+                ],
+                correctAnswer: "D"
+            },
+            {
+                question: "It is the first step in developing privacy by design and privacy engineering solutions for online privacy.",
+                options: [
+                    "A. Defining the threats to online privacy",
+                    "B. Defining the security objectives",
+                    "C. Defining vulnerabilities",
+                    "D. Defining security threats"
+                ],
+                correctAnswer: "A"
+            },
+            {
+                question: "This particular attack uses an unprotected communication medium to intercept sensitive information.",
+                options: [
+                    "A. Traffic analysis",
+                    "B. Release of message contents",
+                    "C. Masquerade",
+                    "D. Replay"
+                ],
+                correctAnswer: "B"
+            },
+            {
+                question: "It refers to the technical tools and techniques that are used to implement security services.",
+                options: [
+                    "A. Security mechanism",
+                    "B. Security objectives",
+                    "C. Security control",
+                    "D. Security architecture"
+                ],
+                correctAnswer: "A"
+            },
+            {
+                question: "In the app vetting process, this person is responsible for deploying, maintaining, and securing the organization's mobile devices.",
+                options: [
+                    "A. Auditor",
+                    "B. User",
+                    "C. Administrator",
+                    "D. Developer"
+                ],
+                correctAnswer: "C"
+            },
+            {
+                question: "It pertains to a group of people who repackage and sell information to various data users.",
+                options: [
+                    "A. Data brokers",
+                    "B. Data collectors",
+                    "C. Data users",
+                    "D. Data manipulators"
+                ],
+                correctAnswer: "A"
+            },
+            {
+                question: "This security service means that a system or a system resource is accessible and usable upon demand by an authorized system entity.",
+                options: [
+                    "A. Access control",
+                    "B. Authentication",
+                    "C. Nonrepudiation",
+                    "D. Availability service"
+                ],
+                correctAnswer: "D"
+            },
+            {
+                question: "This form of attack occurs when one entity impersonates another.",
+                options: [
+                    "A. Traffic analysis",
+                    "B. Release of message contents",
+                    "C. Masquerade",
+                    "D. Replay"
+                ],
+                correctAnswer: "C"
+            },
+            {
+                question: "What does OSI stand for?",
+                options: [
+                    "A. Open Systems Interconnection",
+                    "B. Open Security Interconnection",
+                    "C. Open Structure Interconnection",
+                    "D. Open Service Interconnection"
+                ],
+                correctAnswer: "A"
+            },
+            {
+                question: "It pertains to a group of people who collect information directly from their customers, audience, or other types of users of their services.",
+                options: [
+                    "A. Data brokers",
+                    "B. Data collectors",
+                    "C. Data users",
+                    "D. Data manipulators"
+                ],
+                correctAnswer: "B"
+            },
+            {
+                question: "It is a security goal that generates the requirement for actions of an entity to be traced uniquely to that entity.",
+                options: [
+                    "A. Integrity",
+                    "B. Authenticity",
+                    "C. Accountability",
+                    "D. Availability"
+                ],
+                correctAnswer: "C"
+            },
+            {
+                question: "This is an assurance that prevents either a sender or a receiver from denying a transmitted message.",
+                options: [
+                    "A. Nonrepudiation",
+                    "B. Data integrity",
+                    "C. Access control",
+                    "D. Data confidentiality"
+                ],
+                correctAnswer: "A"
+            },
+            {
+                question: "This type of attack involves the passive capture of a data unit and subsequent retransmission to produce an unauthorized effect.",
+                options: [
+                    "A. Traffic analysis",
+                    "B. Release of message contents",
+                    "C. Masquerade",
+                    "D. Replay"
+                ],
+                correctAnswer: "D"
+            },
+            {
+                question: "It pertains to the process of evaluation and approval or rejection of apps within an organization.",
+                options: [
+                    "A. App evaluation",
+                    "B. App deployment",
+                    "C. App architecture",
+                    "D. App vetting"
+                ],
+                correctAnswer: "D"
+            },
+            {
+                question: "This security objective ensures that a system performs its intended function in an unimpaired manner, free from accidental and unauthorized manipulation of the system.",
+                options: [
+                    "A. System Integrity",
+                    "B. Security Integrity",
+                    "C. Integrity Sequence",
+                    "D. Data Integrity"
+                ],
+                correctAnswer: "A"
+            },
+            {
+                question: "In security objectives, this pertains to being genuine and being able to be verified and trusted.",
+                options: [
+                    "A. Integrity",
+                    "B. Authenticity",
+                    "C. Accountability",
+                    "D. Availability"
+                ],
+                correctAnswer: "B"
+            },
+            {
+                question: "Which of the following is a valid statement about system integrity?",
+                options: [
+                    "A. It is concerned with ensuring that communication is authentic.",
+                    "B. It ensures that a system performs its intended function in an unimpaired manner.",
+                    "C. It ensures that resource is accessible and usable upon demand.",
+                    "D. It is a process that is designed to detect, prevent, or recover from a security attack."
+                ],
+                correctAnswer: "B"
+            },
+            {
+                question: "Which of the following is a valid statement about data nonrepudiation?",
+                options: [
+                    "A. It is the ability to limit and control access via communications links.",
+                    "B. It is the protection of transmitted data from passive attacks.",
+                    "C. It ensures that information is modified only in appropriate ways by persons authorized to change it.",
+                    "D. It prevents either a sender or a receiver from denying a transmitted message."
+                ],
+                correctAnswer: "D"
+            },
+            {
+                question: "In the personal data ecosystem, which of the following best describes data collectors?",
+                options: [
+                    "A. They compile large amounts of personal data without having direct online contact with the person.",
+                    "B. They collect information directly from their customers and other types of users of their services.",
+                    "C. They manage small amounts of data from different business.",
+                    "D. They collect and distribute various information to data users."
+                ],
+                correctAnswer: "B"
+            },
+            {
+                question: "Which of the following statements best describes access control?",
+                options: [
+                    "A. It is the ability to limit and control access via communications links.",
+                    "B. It is the protection of transmitted data from passive attacks.",
+                    "C. It ensures that information is modified only in appropriate ways by persons authorized to change it.",
+                    "D. It prevents either a sender or a receiver from denying a transmitted message."
+                ],
+                correctAnswer: "A"
+            },
+            {
+                question: "Which of the following is a valid statement about data integrity?",
+                options: [
+                    "A. It ensures that data and programs are changed only in a specified and authorized manner.",
+                    "B. It ensures that a system performs its intended function in an unimpaired manner.",
+                    "C. It ensures that systems work promptly, and the service is not denied to authorized users.",
+                    "D. It is a process that is designed to detect, prevent, or recover from a security attack."
+                ],
+                correctAnswer: "A"
+            },
+            {
+                question: "Which of the following is a valid statement about data confidentiality?",
+                options: [
+                    "A. It is the ability to limit and control access via communications links.",
+                    "B. It is the protection of transmitted data from passive attacks.",
+                    "C. It ensures that information is modified only in appropriate ways by persons authorized to change it.",
+                    "D. It prevents either a sender or a receiver from denying a transmitted message."
+                ],
+                correctAnswer: "B"
+            },
+            {
+                question: "In the app vetting process, which of the following best describes an administrator?",
+                options: [
+                    "A. An administrator is responsible in inspecting reports to ensure that an app meets the security requirements.",
+                    "B. An administrator is responsible for deploying, maintaining, and securing the organization's mobile devices.",
+                    "C. An administrator is responsible in researching, implementing, and managing software programs.",
+                    "D. An administrator is responsible in reducing risk of data exposure."
+                ],
+                correctAnswer: "B"
+            },
+            {
+                question: "Which of the following statements best describes the app vetting process?",
+                options: [
+                    "A. It is the process of evaluation and approval or rejection of apps within an organization.",
+                    "B. It is the process of designing and implementing risk management process.",
+                    "C. It is the development process of an app.",
+                    "D. It is the process of analyzing the criteria objective of an application."
+                ],
+                correctAnswer: "A" 
+            },
+            {
+                question: "Which of the following statements best describes web browser security and privacy?",
+                options: [
+                    "A. Web browser security and privacy are concerned with web software.",
+                    "B. Web browser security and concerned with the vulnerabilities and threats associated with the platform that hosts a website.",
+                    "C. Web browser security and privacy are concerned with the browser used from a client system to access a web server.",
+                    "D. Web browser security and privacy are concerned with network protocol application."
+                ],
+                correctAnswer: "C"
+            },
+            {
+                question: "Which of the following statements best describes security attacks?",
+                options: [
+                    "A. These are actions that alter different network process.",
+                    "B. These are system vulnerabilities in an organization.",
+                    "C. These are technical tools and techniques that are used to implement security services.",
+                    "D. These are any action that compromises the security of information owned by an organization."
+                ],
+                correctAnswer: "D"
+            },
+            {
+                question: "Which of the following is NOT a part of the active attacks?",
+                options: [
+                    "A. Masquerade",
+                    "B. Replay",
+                    "C. Denial of service",
+                    "D. Traffic analysis"
+                ],
+                correctAnswer: "D"
+            },
+            {
+                question: "Which of the following is NOT a part of the mobile ecosystem?",
+                options: [
+                    "A. Device and OS vendor infrastructure",
+                    "B. Enterprise mobility management systems",
+                    "C. Public application stores",
+                    "D. Network infrastructure system"
+                ],
+                correctAnswer: "D"
+            },
+            {
+                question: "Which of the following statements best describes passive attacks?",
+                options: [
+                    "A. They involve some modification of transmitted data.",
+                    "B. They involve creation of false data.",
+                    "C. They are like eavesdropping or monitoring transmissions.",
+                    "D. They involve the passive capture of a data unit to produce an unauthorized effect."
+                ],
+                correctAnswer: "C" 
+            },
+            {
+                question: "In the personal data ecosystem, which of the following best describes data brokers?",
+                options: [
+                    "A. They compile large amounts of personal data without having direct online contact with the person.",
+                    "B. They collect information directly from their customers and other types of users of their services.",
+                    "C. They manage small amounts of data from different business.",
+                    "D. They collect and distribute various information to data users."
+                ],
+                correctAnswer: "A" 
+            },
+            {
+                question: "Which of the following is NOT a security objective?",
+                options: [
+                    "A. Accountability",
+                    "B. Authenticity",
+                    "C. Availability",
+                    "D. Accessibility"
+                ],
+                correctAnswer: "D"
+            },
+            {
+                question: "Which of the following statements best describes web server security and privacy?",
+                options: [
+                    "A. Web browser security and privacy are concerned with web software.",
+                    "B. Web browser security are concerned with the vulnerabilities and threats associated with the platform that hosts a website.",
+                    "C. Web browser security and privacy are concerned with the browser used from a client system to access a web server.",
+                    "D. Web browser security and privacy are concerned with network protocol application."
+                ],
+                correctAnswer: "B" 
+            },
+            {
+                question: "Which of the following statements best describes security objectives?",
+                options: [
+                    "A. These pertain to goals and constraints that affect the confidentiality, integrity, and availability of data and application.",
+                    "B. These are considered the heart of privacy and can encompass such a wide range of information.",
+                    "C. These are a part of the data protection area that deals with the proper handling of data.",
+                    "D. These prevent any unintentional or unintentional alteration, deletion, or data disclosure."
+                ],
+                correctAnswer: "A" 
+            },
+            {
+                question: "Which of the following statements is TRUE about active attacks?",
+                options: [
+                    "A. They involve some modification of transmitted data.",
+                    "B. They are like eavesdropping or monitoring transmissions.",
+                    "C. They are very difficult to detect because they do not involve any alteration of the data.",
+                    "D. Their goals are to obtain information that is being transmitted."
+                ],
+                correctAnswer: "A" 
+            },
+            {
+                question: "Which of the following is NOT a classification of security and privacy issues?",
+                options: [
+                    "A. Web server security and privacy",
+                    "B. App application security and privacy",
+                    "C. Web browser security and privacy",
+                    "D. Web user security and privacy"
+                ],
+                correctAnswer: "D"
+            },
+            {
+                question: "Which of the following statements best describes security mechanisms?",
+                options: [
+                    "A. These are actions that process security assessment.",
+                    "B. These are communication service that enhances the security of the data processing system.",
+                    "C. These are technical tools and techniques that are used to implement security services.",
+                    "D. These are any action that compromises the security of information owned by an organization."
+                ],
+                correctAnswer: "C"
+            },
+            {
+                question: "It is the means of disseminating privacy information to all employees in an organization.",
+                options: [
+                    "A. Information privacy training program",
+                    "B. Data awareness training program",
+                    "C. Privacy awareness training program",
+                    "D. Information security training program"
+                ],
+                correctAnswer: "C"
+            },
+            {
+                question: "It pertains to the countermeasures used to reduce the chances that a threat will exploit a vulnerability.",
+                options: [
+                    "A. Security management",
+                    "B. Security control",
+                    "C. Security assessment",
+                    "D. Security essential"
+                ],
+                correctAnswer: "B"
+            },
+            {
+                question: "In the cybersecurity learning continuum, this training is intended to develop secure practices in the use of IT resources.",
+                options: [
+                    "A. Awareness",
+                    "B. Cybersecurity essentials",
+                    "C. Role-based training",
+                    "D. Certification"
+                ],
+                correctAnswer: "B"
+            },
+            {
+                question: "It is defined as the probable frequency that a threat agent will inflict harm upon an asset within a given time frame.",
+                options: [
+                    "A. Impact",
+                    "B. Likelihood",
+                    "C. Risk",
+                    "D. Threat"
+                ],
+                correctAnswer: "B"
+            },
+            {
+                question: "It is defined as a measure of the extent to which an entity is threatened by a potential circumstance or event.",
+                options: [
+                    "A. Impact",
+                    "B. Likelihood",
+                    "C. Risk",
+                    "D. Threat"
+                ],
+                correctAnswer: "C"
+            },
+            {
+                question: "This pertains to the measure of how much damage a given threat can do.",
+                options: [
+                    "A. Threat event frequency",
+                    "B. Threat strength",
+                    "C. Threat severity",
+                    "D. Impact"
+                ],
+                correctAnswer: "C" 
+            },
+            {
+                question: "This pertains to any circumstances or events with the potential to impact organizational operations adversely.",
+                options: [
+                    "A. Risk assessment",
+                    "B. Threat",
+                    "C. Vulnerability",
+                    "D. Risk"
+                ],
+                correctAnswer: "B"
+            },
+            {
+                question: "This pertains to the possible level of force that a threat agent can apply against an asset.",
+                options: [
+                    "A. Threat event frequency",
+                    "B. Threat strength",
+                    "C. Threat severity",
+                    "D. Impact"
+                ],
+                correctAnswer: "B"
+            },
+            {
+                question: "This assessment process enables organization executives to determine an appropriate budget for security.",
+                options: [
+                    "A. Risk assessment process",
+                    "B. Privacy assessment process",
+                    "C. Budget assessment process",
+                    "D. Security assessment process"
+                ],
+                correctAnswer: "A"
+            },
+            {
+                question: "It pertains to a shared understanding of how personal data can and should be used to support broader strategic objectives in an organization.",
+                options: [
+                    "A. Privacy culture",
+                    "B. Privacy awareness",
+                    "C. Privacy responsibilities",
+                    "D. Privacy assessment"
+                ],
+                correctAnswer: "A"
+            },
+            {
+                question: "This is considered as an item of value to the achievement of organizational mission and objectives.",
+                options: [
+                    "A. Asset",
+                    "B. Liability",
+                    "C. Threat",
+                    "D. Security control"
+                ],
+                correctAnswer: "A"
+            },
+            {
+                question: "It is defined as an analysis of how information is handled.",
+                options: [
+                    "A. Privacy impact assessment",
+                    "B. Privacy awareness",
+                    "C. Risk assessment process",
+                    "D. Information assessment process"
+                ],
+                correctAnswer: "A"
+            },
+            {
+                question: "It is defined as the magnitude of harm resulting from the consequences of unauthorized disclosure of information.",
+                options: [
+                    "A. Impact",
+                    "B. Likelihood",
+                    "C. Risk",
+                    "D. Threat"
+                ],
+                correctAnswer: "A"
+            },
+            {
+                question: "It is defined as the magnitude of risk or a combination of risks.",
+                options: [
+                    "A. Risk assessment",
+                    "B. Level of risk",
+                    "C. Risk control",
+                    "D. Risk impact"
+                ],
+                correctAnswer: "B"
+            },
+            {
+                question: "This set of activities promotes security accountability, and informs the workforce of security news.",
+                options: [
+                    "A. Awareness",
+                    "B. Cybersecurity essentials",
+                    "C. Role-based training",
+                    "D. Certification"
+                ],
+                correctAnswer: "A"
+            },
+            {
+                question: "Which of the following best describes privacy culture?",
+                options: [
+                    "A. It is an important aspect of information sharing.",
+                    "B. It is the extent to which staff demonstrates expected privacy behavior in line with their responsibilities.",
+                    "C. It is the means for disseminating privacy information to all employees.",
+                    "D. It is an analysis of how information is handled to ensure that handling conforms privacy."
+                ],
+                correctAnswer: "B" 
+            },
+            {
+                question: "In the risk assessment process, which of the following best describes the level of risk?",
+                options: [
+                    "A. It is the magnitude of harm that can be expected to result from the consequences of unauthorized access.",
+                    "B. It is a measure of how much damage a given threat can do.",
+                    "C. It is the magnitude of risk or combination of risk.",
+                    "D. It is any circumstance or event with the potential to adversely impact organizational operations."
+                ],
+                correctAnswer: "C"
+            },
+            {
+                question: "In the cybersecurity learning continuum, which of the following best describes awareness?",
+                options: [
+                    "A. It is a set of activities that explains and promotes security.",
+                    "B. It is intended to develop secure practices in the use of IT resources.",
+                    "C. It is intended to provide the knowledge and skill specific to an individual's roles relative to information systems.",
+                    "D. It integrates the security skills and competencies of the various functional specialties into a common body of knowledge."
+                ],
+                correctAnswer: "A"
+            },
+            {
+                question: "In the risk assessment process, which of the following best describes an impact?",
+                options: [
+                    "A. It is an item of value to the achievement of organizational business objectives.",
+                    "B. It is a safeguard or countermeasure prescribed for an information system.",
+                    "C. It is the magnitude of harm that can be expected from unauthorized access.",
+                    "D. It is the magnitude of a risk or a combination of risks."
+                ],
+                correctAnswer: "C"
+            },
+            {
+                question: "In the risk assessment process, which of the following best describes an asset?",
+                options: [
+                    "A. It is an item of value to the achievement of organizational business objectives.",
+                    "B. It is a safeguard or countermeasure prescribed for an information system.",
+                    "C. It is the magnitude of harm that can be expected from unauthorized access.",
+                    "D. It is the magnitude of a risk or a combination of risks."
+                ],
+                correctAnswer: "A"
+            },
+            {
+                question: "In the cybersecurity learning continuum, which of the following best describes role-based training?",
+                options: [
+                    "A. It is a set of activities that explains and promotes security.",
+                    "B. It is intended to develop secure practices in the use of IT resources.",
+                    "C. It is intended to provide the knowledge and skill specific to an individual's roles relative to information systems.",
+                    "D. It integrates the security skills and competencies of the various functional specialties into a common body of knowledge."
+                ],
+                correctAnswer: "C" 
+            },
+            {
+                question: "Which of the following statements best describes Personally Identifiable Information (PII)?",
+                options: [
+                    "A. It is a piece of information that takes privacy requirements into account.",
+                    "B. It is a piece of information that can be used to distinguish an individual's identity.",
+                    "C. It is considered an important aspect of information sharing.",
+                    "D. It is a set of standards in information privacy."
+                ],
+                correctAnswer: "B"
+            },
+            {
+                question: "Which of the following is NOT part of the cybersecurity continuum?",
+                options: [
+                    "A. Awareness",
+                    "B. Cybersecurity essentials",
+                    "C. Risk assessment training",
+                    "D. Role-based training"
+                ],
+                correctAnswer: "C"
+            },
+            {
+                question: "In the risk assessment process, which of the following best describes security control?",
+                options: [
+                    "A. It is an item of value to the achievement of organizational business objectives.",
+                    "B. It is a safeguard or countermeasure prescribed for an information system.",
+                    "C. It is the magnitude of harm that can be expected from unauthorized access.",
+                    "D. It is the magnitude of a risk or a combination of risks."
+                ],
+                correctAnswer: "B"
+            },
+            {
+                question: "In the risk assessment process, which of the following best describes threat event frequency?",
+                options: [
+                    "A. It is the probable level of force that a threat agent can apply against an asset.",
+                    "B. It is a measure of how much damage a given threat can do.",
+                    "C. It is the probable frequency, within a given time frame, that a threat agent will act against an asset.",
+                    "D. It is any circumstance or event with the potential to adversely impact organizational operations."
+                ],
+                correctAnswer: "C"
+            },
+            {
+                question: "In PIA (Privacy Impact Assessment), this factor refers to the estimation of how easy it is to identify data subjects with the available data possessed by the available software.",
+                options: [
+                    "A. Procedural potential",
+                    "B. Protective potential",
+                    "C. Level of identification",
+                    "D. Level of assurance"
+                ],
+                correctAnswer: "C"
+            },
+            {
+                question: "In the risk assessment process, which of the following best describes threat strength?",
+                options: [
+                    "A. It is the probable level of force that a threat agent can apply against an asset.",
+                    "B. It is a measure of how much damage a given threat can do.",
+                    "C. It is the probable frequency, within a given time frame, that a threat agent will act against an asset.",
+                    "D. It is any circumstance or event with the potential to adversely impact organizational operations."
+                ],
+                correctAnswer: "A"
+            },
+            {
+                question: "Which of the following statements is true?",
+                options: [
+                    "A. The objective of risk assessment is to implement and deploy a control system.",
+                    "B. The objective of risk assessment is to implement security controls to optimize the level of protection.",
+                    "C. The objective of risk assessment is to enable organizations to measure overall privacy management.",
+                    "D. The objective of risk assessment is to mitigate the impact of a breach of personal data."
+                ],
+                correctAnswer: "C" 
+            },
+            {
+                question: "In the risk assessment process, which of the following best describes vulnerability?",
+                options: [
+                    "A. It is the weakness in an information system, system security procedures, and internal controls that could be exploited by a threat source.",
+                    "B. It is any circumstance or event with the potential to adversely impact organizational operations.",
+                    "C. It is a measure of how much damage a given threat can do.",
+                    "D. It is the magnitude of harm that can be expected to result from the consequences of unauthorized access."
+                ],
+                correctAnswer: "A"
+            },
+            {
+                question: "Which of the following best describes a privacy impact assessment?",
+                options: [
+                    "A. It is an analysis of how information is handled.",
+                    "B. It is a piece of information that can be used to distinguish an individual's identity.",
+                    "C. It is considered an important aspect of information sharing.",
+                    "D. It is a set of standards in information privacy."
+                ],
+                correctAnswer: "A"
+            },
+            {
+                question: "In the cybersecurity learning continuum, which of the following best describes cybersecurity essentials?",
+                options: [
+                    "A. It is a set of activities that explains and promotes security.",
+                    "B. It is intended to develop secure practices in the use of IT resources.",
+                    "C. It is intended to provide the knowledge and skill specific to an individual's roles relative to information systems.",
+                    "D. It integrates all the security skills and competencies of the various functional specialties into a common body of knowledge."
+                ],
+                correctAnswer: "B"
+            },
+            {
+                question: "In the risk assessment process, which of the following best describes the level of risk?",
+                options: [
+                    "A. It is an item of value to the achievement of organizational business objectives.",
+                    "B. It is a safeguard or countermeasure prescribed for an information system.",
+                    "C. It is the magnitude of harm that can be expected from unauthorized access.",
+                    "D. It is the magnitude of a risk or a combination of risks."
+                ],
+                correctAnswer: "D"
+            },
+            {
+                question: "Which of the following statements is true?",
+                options: [
+                    "A. The objective of risk assessment is to implement and deploy a control system.",
+                    "B. The objective of risk assessment is to determine an appropriate budget for security.",
+                    "C. The objective of risk assessment is to enable organizations to measure overall privacy management.",
+                    "D. The objective of risk assessment is to mitigate the impact of the breach of personal data."
+                ],
+                correctAnswer: "C" 
+            },
+            {
+                question: "In the cybersecurity learning continuum, which of the following best describes education or certification?",
+                options: [
+                    "A. It is a set of activities that explains and promotes security.",
+                    "B. It is intended to develop secure practices in the use of IT resources.",
+                    "C. It is intended to provide the knowledge and skill specific to an individual's roles relative to information systems.",
+                    "D. It integrates all the security skills and competencies of the various functional specialties into a common body of knowledge."
+                ],
+                correctAnswer: "D"
+            },
+            {
+                question: "In the risk assessment process, which of the following best describes threat severity?",
+                options: [
+                    "A. It is the probable level of force that a threat agent can apply against an asset.",
+                    "B. It is a measure of how much damage a given threat can do.",
+                    "C. It is the probable frequency, within a given time frame, that a threat agent will act against an asset.",
+                    "D. It is any circumstance or event with the potential to adversely impact organizational operations."
+                ],
+                correctAnswer: "B"
+            }
+        ];
+
+        // 2. DOM Elements and State Variables
+        const questionTextEl = document.getElementById('question-text');
+        const optionsContainer = document.getElementById('options-container');
+        const nextButton = document.getElementById('next-button');
+        const cardCounterEl = document.getElementById('card-counter');
+        const feedbackMessageEl = document.getElementById('feedback-message');
+
+        let currentCardIndex = 0;
+        let answeredCorrectly = false; // Tracks if the current question has been answered correctly
+        
+        // Helper function to extract the letter key (A, B, C, D) from the option text
+        function getOptionKey(optionText) {
+            return optionText.charAt(0);
+        }
+
+        // 3. Functions
+        function loadQuestion() {
+            const card = quizData[currentCardIndex];
+            
+            // 1. Reset state
+            answeredCorrectly = false;
+            optionsContainer.innerHTML = '';
+            feedbackMessageEl.textContent = '';
+            
+            // --- MODIFICATION: Ensure Next Button is disabled until correct answer is chosen ---
+            nextButton.classList.remove('active');
+            nextButton.setAttribute('disabled', 'true');
+            // ---------------------------------------------------------------------------------
+            
+            // 2. Display Question & Counter
+            questionTextEl.textContent = card.question;
+            cardCounterEl.textContent = `Question ${currentCardIndex + 1} of ${quizData.length}`;
+            
+            // 3. Create Option Buttons
+            card.options.forEach(optionText => {
+                const li = document.createElement('li');
+                const button = document.createElement('button');
+                
+                button.className = 'option-button';
+                button.textContent = optionText;
+                button.dataset.key = getOptionKey(optionText); // Store the key (A, B, C, D)
+                button.addEventListener('click', checkAnswer);
+                
+                li.appendChild(button);
+                optionsContainer.appendChild(li);
+            });
+        }
+
+        function checkAnswer(event) {
+            const selectedButton = event.target;
+            
+            // If the button was already marked as attempted-incorrect, remove the style
+            if (selectedButton.classList.contains('attempted-incorrect')) {
+                selectedButton.classList.remove('attempted-incorrect');
+            }
+            
+            const selectedKey = selectedButton.dataset.key;
+            const correctKey = quizData[currentCardIndex].correctAnswer;
+            
+            // Disable only the clicked button temporarily
+            selectedButton.classList.add('disabled');
+            
+            // Provide feedback
+            if (selectedKey === correctKey) {
+                answeredCorrectly = true;
+                
+                // Highlight CORRECT answer and disable all options permanently for this question
+                Array.from(optionsContainer.children).forEach(li => {
+                    const button = li.querySelector('.option-button');
+                    button.removeEventListener('click', checkAnswer);
+                    button.classList.add('disabled'); // Disable all permanently
+                    if (button.dataset.key === correctKey) {
+                        button.classList.add('correct');
+                    }
+                });
+                
+                feedbackMessageEl.textContent = "✅ Correct! Great job. Click Next Question to continue.";
+                
+                // --- MODIFICATION: Enable Next button ONLY on correct answer ---
+                nextButton.classList.add('active');
+                nextButton.removeAttribute('disabled');
+                // --------------------------------------------------------------
+                
+            } else {
+                answeredCorrectly = false;
+                selectedButton.classList.add('attempted-incorrect');
+                selectedButton.classList.remove('disabled'); // Re-enable for the next attempt
+                selectedButton.removeEventListener('click', checkAnswer); // Ensure this specific option can't be clicked again
+                
+                feedbackMessageEl.textContent = "❌ Incorrect. Try again! That answer is now disabled.";
+                
+                // --- MODIFICATION: Next Button remains disabled ---
+                nextButton.classList.remove('active');
+                nextButton.setAttribute('disabled', 'true');
+                // --------------------------------------------------
+            }
+        }
+
+        function nextQuestion() {
+            // --- MODIFICATION: Only proceed if the question was answered correctly ---
+            if (!answeredCorrectly) {
+                // This alert should ideally not be reached if the next button is disabled correctly
+                return;
+            }
+            
+            currentCardIndex = (currentCardIndex + 1) % quizData.length;
+            
+            if (currentCardIndex === 0) {
+                 nextButton.textContent = "Restart Quiz";
+            } else {
+                 nextButton.textContent = "Next Question";
+            }
+            
+            loadQuestion();
+        }
+
+        // 4. Event Listeners
+        nextButton.addEventListener('click', nextQuestion);
+
+        // 5. Initial Load
+        loadQuestion();
+        // The initial load runs, but the button remains disabled until the first correct answer is chosen.
+        nextButton.textContent = "Start Quiz";
+    </script>
+</body>
+</html>

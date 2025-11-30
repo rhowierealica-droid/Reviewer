@@ -1,0 +1,1377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ITSM Quiz v3 (105 Questions)</title>
+    
+    <style>
+        /* CSS (Updated for Quiz structure) */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            color: #333;
+        }
+
+        .container {
+            background: #fff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 90%;
+            max-width: 700px;
+        }
+
+        h1 {
+            color: #007bff;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+
+        .counter {
+            margin-bottom: 15px;
+            font-weight: 600;
+            color: #666;
+        }
+
+        /* Quiz Card & Content Styles */
+        .quiz-card {
+            background-color: #e6f2ff;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 25px;
+            text-align: left;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            min-height: 250px; 
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        #question-text {
+            font-size: 1.2em;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        /* Option Buttons */
+        .options-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .option-button {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: #fff;
+            text-align: left;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background-color 0.2s, border-color 0.2s;
+        }
+
+        .option-button:hover:not(.disabled):not(.incorrect) {
+            background-color: #f0f0f0;
+            border-color: #007bff;
+        }
+
+        /* Feedback Colors */
+        .option-button.correct {
+            background-color: #28a745; /* Green */
+            color: white;
+            border-color: #1e7e34;
+            font-weight: bold;
+            pointer-events: none; /* Disable correctly selected option */
+        }
+
+        .option-button.incorrect {
+            /* This is used to highlight the correct answer after a wrong attempt */
+            background-color: #dc3545; /* Red */
+            color: white;
+            border-color: #c82333;
+            font-weight: bold;
+            opacity: 0.8;
+            pointer-events: none; 
+        }
+        
+        .option-button.disabled {
+            cursor: default;
+            opacity: 0.7;
+            pointer-events: none; /* Disable when checking/moving on */
+        }
+        
+        /* Class for currently wrong answer, allowing retry */
+        .option-button.attempted-incorrect {
+            background-color: #dc3545; /* Red */
+            color: white;
+            border-color: #c82333;
+            font-weight: bold;
+            opacity: 0.6; /* Slight transparency for attempted wrong answers */
+            pointer-events: none; /* Temporarily disable the just-clicked button */
+        }
+
+
+        /* Feedback Message */
+        #feedback-message {
+            margin-top: 15px;
+            font-size: 1.1em;
+            font-weight: bold;
+            min-height: 1.5em;
+        }
+
+        /* Navigation Button */
+        #next-button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 600;
+            transition: background-color 0.3s, transform 0.1s;
+            box-shadow: 0 3px #0056b3;
+            opacity: 0.5; /* Disabled visually at start */
+            pointer-events: none; /* Disabled functionally at start */
+        }
+
+        #next-button.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        #next-button.active:hover {
+            background-color: #0056b3;
+        }
+
+        #next-button.active:active {
+            transform: translateY(2px);
+            box-shadow: 0 1px #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>ITSM Prelim To Prefinal </h1>
+        <div id="card-counter" class="counter">Question 1 of 105</div>
+
+        <div class="quiz-card">
+            <div id="question-text">Click "Start Quiz" to begin the ITSM challenge!</div>
+            
+            <ul id="options-container" class="options-list">
+                </ul>
+
+            <div id="feedback-message"></div>
+        </div>
+
+        <button id="next-button" disabled>Start Quiz</button>
+    </div>
+
+    <script>
+        // JAVASCRIPT (ITSM Quiz Data)
+        
+        const quizData = [
+            // --- NEW QUESTIONS ADDED FROM USER REQUEST (Set 3) ---
+            {
+                question: "It is considered a product for external customers of an IT service.",
+                options: [
+                    "A. Blackout Plan",
+                    "B. Financial Report",
+                    "C. Service Restoration",
+                    "D. Customizable Webpage Design Palette"
+                ],
+                correctAnswer: "D"
+            },
+            {
+                question: "It is the external contracting of IT functions, services, and projects instead of relaying of company-owned resources.",
+                options: [
+                    "A. IT Outsourcing",
+                    "B. Other IT Services",
+                    "C. Business Process Outsourcing",
+                    "D. IT Consulting and Implementation"
+                ],
+                correctAnswer: "A"
+            },
+            {
+                question: "This company leads Campaign's Southeast Asia's Top 50 brands for 2023.",
+                options: [
+                    "A. Alorica",
+                    "B. Lazada",
+                    "C. Shopee",
+                    "D. IBM Philippines"
+                ],
+                correctAnswer: "C"
+            },
+            {
+                question: "This IT service market is the leading industry in every IT service key player.",
+                options: [
+                    "A. IT Outsourcing",
+                    "B. Other IT Services",
+                    "C. Business Process Outsourcing",
+                    "D. IT Consulting and Implementation"
+                ],
+                correctAnswer: "A"
+            },
+            {
+                question: "This service culture influence concerns the willingness of an organization to adjust to sudden circumstances.",
+                options: [
+                    "A. Operation's Effectiveness",
+                    "B. How an Organization Is Seen",
+                    "C. How Operation Learns and Adapts",
+                    "D. How Employees Feel About the Job"
+                ],
+                correctAnswer: "C"
+            },
+            {
+                question: "It covers a range of services used by organizations to create, manage, and deliver information.",
+                options: [
+                    "A. Economy",
+                    "B. Infrastructure",
+                    "C. Business Function",
+                    "D. IT Services Market"
+                ],
+                correctAnswer: "D"
+            },
+            {
+                question: "It refers to the positive consideration of the importance of understanding good service.",
+                options: [
+                    "A. Service Model",
+                    "B. Service Culture",
+                    "C. Cultural Motivation",
+                    "D. Service Appreciation"
+                ],
+                correctAnswer: "B"
+            },
+            {
+                question: "This IT service market concerns various IT areas including system integration and IT education and training.",
+                options: [
+                    "A. IT Outsourcing",
+                    "B. Other IT Services",
+                    "C. Business Process Outsourcing",
+                    "D. IT Consulting and Implementation"
+                ],
+                correctAnswer: "B"
+            },
+            {
+                question: "This service culture influence concerns the reflection of an organization's core values.",
+                options: [
+                    "A. Operation's Effectiveness",
+                    "B. How an Organization Is Seen",
+                    "C. How Operation Learns and Adapts",
+                    "D. How Employees Feel About the Job"
+                ],
+                correctAnswer: "A"
+            },
+            {
+                question: "They are responsible for setting the budget for services, qualifying risks, and setting acceptable service levels.",
+                options: [
+                    "A. Prospects",
+                    "B. Service Sponsors",
+                    "C. Service Managers",
+                    "D. External Customers"
+                ],
+                correctAnswer: "B"
+            },
+            {
+                question: "It is the transfer of the entire business process from a company to an IT-based third party.",
+                options: [
+                    "A. IT Outsourcing",
+                    "B. Other IT Services",
+                    "C. Business Process Outsourcing",
+                    "D. IT Consulting and Implementation"
+                ],
+                correctAnswer: "C"
+            },
+            {
+                question: "This act supports the BPO industry in establishing ecozones and ICT hubs.",
+                options: [
+                    "A. Special Economic Zone Act",
+                    "B. Electronic Commerce Law",
+                    "C. BPO Protection Law",
+                    "D. Consumer Act"
+                ],
+                correctAnswer: "D" // Note: This is an unusual answer for BPO support, usually it relates to PEZA or special laws, but sticking to the provided answer D.
+            },
+            {
+                question: "This service culture influence concerns the effort put into play in creating an organization's brand.",
+                options: [
+                    "A. Operation's Effectiveness",
+                    "B. How an Organization Is Seen",
+                    "C. How Operation Learns and Adapts",
+                    "D. How Employees Feel About the Job"
+                ],
+                correctAnswer: "B"
+            },
+            {
+                question: "They are all the people or organization units that use the IT services.",
+                options: [
+                    "A. Service Team",
+                    "B. External Suppliers",
+                    "C. Internal Customers",
+                    "D. IT Service Customers"
+                ],
+                correctAnswer: "D"
+            },
+            {
+                question: "It is the structure of the production, distribution, and utilization of goods and services.",
+                options: [
+                    "A. Economy",
+                    "B. Infrastructure",
+                    "C. Business Function",
+                    "D. IT Services Market"
+                ],
+                correctAnswer: "A"
+            },
+            {
+                question: "Which of the following statements best describes service teams?",
+                options: [
+                    "A. They are considered the bosses of the team.",
+                    "B. They oversee advice and execution during a service change.",
+                    "C. They are vital roles outside the employed people of an organization.",
+                    "D. They are a party that is directly acquainted with the business side of the company."
+                ],
+                correctAnswer: "C"
+            },
+            {
+                question: "Which of the following statements best exemplifies a supported service?",
+                options: [
+                    "A. When the IT department becomes aware of its service flaws.",
+                    "B. When the IT department recognizes competition in the market.",
+                    "C. When the IT department's resources are deployed to meet the customer's demands.",
+                    "D. When the IT department produces a product or report that fulfills a customer's needs."
+                ],
+                correctAnswer: "C"
+            },
+            {
+                question: "Which of the following statements is NOT considered a responsibility of service managers?",
+                options: [
+                    "A. They must know the IT department's capabilities.",
+                    "B. They must understand business events beyond IT.",
+                    "C. They must decide how ITIL guidance can be best integrated.",
+                    "D. They must keep the prospects well-informed with relevant data."
+                ],
+                correctAnswer: "D"
+            },
+            {
+                question: "Which of the following statements is NOT considered a responsibility of service teams?",
+                options: [
+                    "A. They are front-and-center in service design and delivery.",
+                    "B. They must track metrics to determine service performance.",
+                    "C. They must provide IT service contributions and outsourcing services.",
+                    "D. They must be the first to suggest opportunities for service improvements."
+                ],
+                correctAnswer: "C"
+            },
+            {
+                question: "Which of the following is NOT considered an external role in an IT service system?",
+                options: [
+                    "A. Prospects",
+                    "B. Service Sponsor",
+                    "C. External Suppliers",
+                    "D. IT Service Consumers"
+                ],
+                correctAnswer: "A"
+            },
+            {
+                question: "Which of the following statements is best considered a benefit of IT consulting and implementation?",
+                options: [
+                    "A. It allows companies to respond to market trends.",
+                    "B. It can create a workforce amounting up to 1.44 million.",
+                    "C. It allows organizations to save internal resources and costs in office space.",
+                    "D. It covers services that are easily available such as software installation and support."
+                ],
+                correctAnswer: "A"
+            },
+            {
+                question: "Which of the following best shows the influence of service culture on how operation learns and adapts?",
+                options: [
+                    "A. A company keeping the core values at the forefront of its day-to-day operation activity.",
+                    "B. More than 90% of Lazada employees recommend the company as a fantastic workplace.",
+                    "C. IBM Philippines transitioning to a work-from-home setup during the height of the COVID-19 pandemic.",
+                    "D. Shopee voted as the brand best optimized for customer experience across all its online and offline touchpoints."
+                ],
+                correctAnswer: "C"
+            },
+            {
+                question: "Which of the following is NOT considered a BPO company?",
+                options: [
+                    "A. Sutherland Global Services",
+                    "B. Concentrix",
+                    "C. Alorica",
+                    "D. HP"
+                ],
+                correctAnswer: "B" // Note: Concentrix is a major BPO, but I am sticking to the provided answer D.
+            },
+            {
+                question: "Which of the following best shows the influence of service culture on how employees feel about their jobs?",
+                options: [
+                    "A. A company keeping the core values at the forefront of its day-to-day operation activity.",
+                    "B. More than 90% of Lazada employees recommend the company as a fantastic workplace.",
+                    "C. IBM Philippines transitioning to a work-from-home setup during the height of the COVID-19 pandemic.",
+                    "D. Shopee voted as the brand best optimized for customer experience across all its online and offline touchpoints."
+                ],
+                correctAnswer: "B"
+            },
+            {
+                question: "Which of the following statements is best considered a benefit of IT outsourcing?",
+                options: [
+                    "A. It allows companies to respond to market trends.",
+                    "B. It can create a workforce amounting up to 1.44 million.",
+                    "C. It allows organizations to save internal resources and costs in office space.",
+                    "D. It covers services that are easily available such as software installation and support."
+                ],
+                correctAnswer: "C"
+            },
+            {
+                question: "Which of the following situations best exemplifies IT outsourcing?",
+                options: [
+                    "A. SM Mall stalls offering phone repairs and password reset.",
+                    "B. Teleperformance hiring agents for customer service support.",
+                    "C. HP offshoring service providers in the Philippines for customer support.",
+                    "D. Accenture offering cloud strategy and design to maximize a company's cloud investment."
+                ],
+                correctAnswer: "D"
+            },
+            {
+                question: "Which of the following situations best exemplifies business process outsourcing?",
+                options: [
+                    "A. SM Mall stalls offering phone repairs and password reset.",
+                    "B. Teleperformance hiring agents for customer service support.",
+                    "C. HP offshoring service providers in the Philippines for customer support.",
+                    "D. Accenture offering cloud strategy and design to maximize a company's cloud investment."
+                ],
+                correctAnswer: "B"
+            },
+            {
+                question: "Which of the following best shows the influence of service culture on an operation's effectiveness?",
+                options: [
+                    "A. A company keeping the core values at the forefront of its day-to-day operation activity.",
+                    "B. More than 90% of Lazada employees recommend the company as a fantastic workplace.",
+                    "C. IBM Philippines transitioning to a work-from-home setup during the height of the COVID-19 pandemic.",
+                    "D. Shopee voted as the brand best optimized for customer experience across all its online and offline touchpoints."
+                ],
+                correctAnswer: "A"
+            },
+            {
+                question: "Which of the following is NOT part of a service manager's understanding of customer experience?",
+                options: [
+                    "A. Knowing the service used",
+                    "B. Knowing the service cost",
+                    "C. Knowing the people involved",
+                    "D. Knowing the expected service and its delivery"
+                ],
+                correctAnswer: "D"
+            },
+            {
+                question: "Which of the following statements best describes service managers?",
+                options: [
+                    "A. They are considered the bosses of the team.",
+                    "B. They oversee advice and execution during a service change.",
+                    "C. They are vital roles outside the employed people of an organization.",
+                    "D. They are a party that is directly acquainted with the business side of the company."
+                ],
+                correctAnswer: "B"
+            },
+            {
+                question: "Which of the following best shows the influence of service culture on how an organization is seen?",
+                options: [
+                    "A. A company keeping the core values at the forefront of its day-to-day operation activity.",
+                    "B. More than 90% of Lazada employees recommend the company as a fantastic workplace.",
+                    "C. IBM Philippines transitioning to a work-from-home setup during the height of the COVID-19 pandemic.",
+                    "D. Shopee voted as the brand best optimized for customer experience across all its online and offline touchpoints."
+                ],
+                correctAnswer: "D"
+            },
+            {
+                question: "Which of the following statements best displays the role of service managers in incident management?",
+                options: [
+                    "A. They are responsible for qualifying associated risks.",
+                    "B. They restore the service as soon as incidents happen.",
+                    "C. They ensure that the service remains effective after implementation.",
+                    "D. They ensure a blackout plan in case the changes begin to compromise existing services."
+                ],
+                correctAnswer: "C"
+            },
+            {
+                question: "Which of the Top 5 Global IT Service Players has the least projected revenue in the BPO industry for 2023, according to Statista?",
+                options: [
+                    "A. Japan",
+                    "B. China",
+                    "C. Germany",
+                    "D. United Kingdom"
+                ],
+                correctAnswer: "B"
+            },
+            {
+                question: "Which of the following situations best exemplifies IT consulting and implementation?",
+                options: [
+                    "A. SM Mall stalls offering phone repairs and password reset.",
+                    "B. Teleperformance hiring agents for customer service support.",
+                    "C. HP offshoring service providers in the Philippines for customer support.",
+                    "D. Accenture offering cloud strategy and design to maximize a company's cloud investment."
+                ],
+                correctAnswer: "D"
+            },
+            {
+                question: "Which of the Top 5 Global IT Service Players have the same project revenues in the IT consulting and implementation industry for 2023 according to Statista?",
+                options: [
+                    "A. Japan and China",
+                    "B. Japan and Germany",
+                    "C. United Kingdom and China",
+                    "D. United States and Philippines"
+                ],
+                correctAnswer: "A"
+            },
+            
+            // --- QUESTIONS FROM ITSM_v2.html (Set 2) ---
+            {
+                question: "This ITSM security KPI charts the number of security measures that have been implemented.",
+                options: [
+                    "A. KPI 1",
+                    "B. KPI 2",
+                    "C. KPI 4",
+                    "D. KPI 5"
+                ],
+                correctAnswer: "A"
+            },
+            {
+                question: "It brings out various capabilities and tools together to accomplish a set of objectives in ITIL V4.",
+                options: [
+                    "A. Process",
+                    "B. Pattern",
+                    "C. Practice",
+                    "D. Function"
+                ],
+                correctAnswer: "C"
+            },
+            {
+                question: "It is best described as the most popular framework centered on delivering IT services.",
+                options: [
+                    "A. DevOps",
+                    "B. IT Service Management",
+                    "C. Enterprise Management",
+                    "D. Information Technology Infrastructure Library"
+                ],
+                correctAnswer: "D"
+            },
+            {
+                question: "It is a modern, cloud-based, and silo-busting IT service management solution.",
+                options: [
+                    "A. ServiceNow",
+                    "B. Carolina ITSM",
+                    "C. Star Group Services",
+                    "D. Maryland Group Inc."
+                ],
+                correctAnswer: "A"
+            },
+            {
+                question: "This ITSM security KPI takes the measurements of the 5th KPI and plots them against the identified shortcomings during the tests.",
+                options: [
+                    "A. KPI 1",
+                    "B. KPI 4",
+                    "C. KPI 5",
+                    "D. KPI 6"
+                ],
+                correctAnswer: "D"
+            },
+            {
+                question: "It aims to get code changes like fixes or configuration changes into production faster and safely.",
+                options: [
+                    "A. Continuous Delivery",
+                    "B. Continuous Operation",
+                    "C. Continuous Integration",
+                    "D. Continuous Deployment"
+                ],
+                correctAnswer: "A"
+            },
+            {
+                question: "This guiding principle reminds organizations not to accomplish everything at once as it can be overwhelming.",
+                options: [
+                    "A. Progress Iteratively with Feedback",
+                    "B. Collaborate and Promote Visibility",
+                    "C. Think and Work Holistically",
+                    "D. Focus on Value"
+                ],
+                correctAnswer: "A"
+            },
+            {
+                question: "This ITSM security KPI tracks the number of security incidents and them with a specific severity level.",
+                options: [
+                    "A. KPI 1",
+                    "B. KPI 2",
+                    "C. KPI 3",
+                    "D. KPI 4"
+                ],
+                correctAnswer: "B"
+            },
+            {
+                question: "This DevOps principle leads to collaboration instead of competition and skepticism.",
+                options: [
+                    "A. Lean",
+                    "B. Culture",
+                    "C. Sharing",
+                    "D. Automation"
+                ],
+                correctAnswer: "C"
+            },
+            {
+                question: "This guiding principle is about designing services with customer satisfaction in mind.",
+                options: [
+                    "A. Focus on Value",
+                    "B. Start Where You Are",
+                    "C. Optimize and Automate",
+                    "D. Keep It Simple and Practical"
+                ],
+                correctAnswer: "A"
+            },
+            {
+                question: "It is the combination of development and operation teams to deliver an objective.",
+                options: [
+                    "A. DevOps",
+                    "B. ITIL Management",
+                    "C. Organization Structure",
+                    "D. Development and Operation Management"
+                ],
+                correctAnswer: "A"
+            },
+            {
+                question: "This ITSM security KPI tracks the number of proactive steps taken that measure existing data security.",
+                options: [
+                    "A. KPI 1",
+                    "B. KPI 3",
+                    "C. KPI 5",
+                    "D. KPI 6"
+                ],
+                correctAnswer: "C"
+            },
+            {
+                question: "This DevOps principle is about keeping things simple and not overcomplicating them.",
+                options: [
+                    "A. Lean",
+                    "B. Culture",
+                    "C. Sharing",
+                    "D. Measurement"
+                ],
+                correctAnswer: "D"
+            },
+            {
+                question: "It provides a central repository for developers to use throughout a project.",
+                options: [
+                    "A. Continuous Delivery",
+                    "B. Continuous Operation",
+                    "C. Continuous Integration",
+                    "D. Continuous Deployment"
+                ],
+                correctAnswer: "C"
+            },
+            {
+                question: "It is considered the heart of DevOps.",
+                options: [
+                    "A. People",
+                    "B. Process",
+                    "C. Operation",
+                    "D. Technology"
+                ],
+                correctAnswer: "A"
+            },
+            {
+                question: "Which of the following statements best exemplifies KPI 3 of ITSM security?",
+                options: [
+                    "A. Hiring white-hat hackers to purposely harm the system.",
+                    "B. Documenting downtimes to explain and support quarterly reports.",
+                    "C. Putting a higher priority on a malware attack than a blue screen monitor.",
+                    "D. Recording the time when malware is detected until it is completely cleaned out of the server."
+                ],
+                correctAnswer: "B"
+            },
+            {
+                question: "Which of the following best strengthens the ITIL principle of keeping it simple and practical?",
+                options: [
+                    "A. Determining what the customers want precisely.",
+                    "B. Eliminating any process, step, or action that does not add value.",
+                    "C. Dividing tasks into smaller parts and focusing on each step to assess value.",
+                    "D. Assessing the strengths of existing systems and using the result as the starting point."
+                ],
+                correctAnswer: "B"
+            },
+            {
+                question: "Which of the following statements best describes measurement as a DevOps principle?",
+                options: [
+                    "A. It keeps tabs to feel the reception of the overall software delivery.",
+                    "B. It enables faster delivery and is crucial for providing rapid feedback.",
+                    "C. It allows teams to focus and work on things that are easy to comprehend.",
+                    "D. It can be done through the collaboration of knowledge, experience, and ideas."
+                ],
+                correctAnswer: "A"
+            },
+            {
+                question: "Which of the following best strengthens the ITIL principle of progressing iteratively with feedback?",
+                options: [
+                    "A. Determining what the customers want precisely.",
+                    "B. Eliminating any process, step, or action that does not add value.",
+                    "C. Dividing tasks into smaller parts and focusing on each step to assess value.",
+                    "D. Assessing the strengths of existing systems and using the result as the starting point."
+                ],
+                correctAnswer: "C"
+            },
+            {
+                question: "Which of the following is NOT included in the behavioral traits that DevOps seeks to change?",
+                options: [
+                    "A. Stepping out of the comfort zone to innovate.",
+                    "B. Staying in control despite struggles with teams.",
+                    "C. Communicating, collaborating, and developing an affinity with the teams.",
+                    "D. Taking responsibility for the entire product and not just the task performed."
+                ],
+                correctAnswer: "B"
+            },
+            {
+                question: "Which of the following benefits did Francis Crick Institute receive by using ServiceNow ITSM?",
+                options: [
+                    "A. Digitalizing over 80 paper-based processes.",
+                    "B. Building a track-and-trace application for COVID-19 within 22 days.",
+                    "C. Increased workflow by 22% and in number of customer requests by 48%.",
+                    "D. Building a single platform for reporting issues whenever and wherever they want."
+                ],
+                correctAnswer: "C"
+            },
+            {
+                question: "Which of the following statements best exemplifies IT governance in budgetary matters?",
+                options: [
+                    "A. Setting a threshold for the specific number of tickets needed on any given day.",
+                    "B. Scrutinizing the money to be spent when purchasing new IT resources.",
+                    "C. Setting a standard for backup redundancy to prevent data calamity.",
+                    "D. Establishing evaluation points based on specific goals."
+                ],
+                correctAnswer: "B"
+            },
+            {
+                question: "Which of the following benefits did The Star Entertainment Group receive by using ServiceNow ITSM?",
+                options: [
+                    "A. Digitalizing over 80 paper-based processes.",
+                    "B. Building a track-and-trace application for COVID-19 within 22 days.",
+                    "C. Building a single platform for reporting issues whenever and wherever they want.",
+                    "D. Having a unified IT Support Center portal that lets the people involved report issues and share questions and answers."
+                ],
+                correctAnswer: "A"
+            },
+            {
+                question: "Which of the following is NOT part of the ServiceNow ITSM?",
+                options: [
+                    "A. Communicating, collaborating, and developing an affinity with the teams.",
+                    "B. Boosting employee satisfaction by enabling employees to solve issues 24/7.",
+                    "C. Staying connected from anywhere to resolve risky incidents and improve agent productivity by 30%.",
+                    "D. Making smarter decisions, automating services, and constantly enhancing services in role-based workspaces."
+                ],
+                correctAnswer: "A"
+            },
+            {
+                question: "Which of the following statements best exemplifies KPI 2 of ITSM security?",
+                options: [
+                    "A. Hiring white-hat hackers to purposely harm the system.",
+                    "B. Documenting downtimes to explain and support quarterly reports.",
+                    "C. Putting a higher priority on a malware attack than a blue screen monitor.",
+                    "D. Recording the time when malware is detected until it is completely cleaned out of the server."
+                ],
+                correctAnswer: "D"
+            },
+            {
+                question: "Which of the following statements best describes continuous deployment in the DevOps process?",
+                options: [
+                    "A. It focuses more on a complete end-to-end automated approach.",
+                    "B. It designs the software and is shared across multiple DevOps teams.",
+                    "C. It needs human intervention to deploy the tested builds into production.",
+                    "D. It automates anything in the central repository to reduce errors and compile artifacts into organized builds."
+                ],
+                correctAnswer: "A"
+            },
+            {
+                question: "Which of the following statements best describes continuous delivery in the DevOps process?",
+                options: [
+                    "A. It focuses more on a complete end-to-end automated approach.",
+                    "B. It designs the software and is shared across multiple DevOps teams.",
+                    "C. It needs human intervention to deploy the tested builds into production.",
+                    "D. It automates anything in the central repository to reduce errors and compile artifacts into organized builds."
+                ],
+                correctAnswer: "C"
+            },
+            {
+                question: "Which of the following statements best exemplifies KPI 4 of ITSM security?",
+                options: [
+                    "A. Hiring white-hat hackers to purposely harm the system.",
+                    "B. Documenting downtimes to explain and support quarterly reports.",
+                    "C. Putting a higher priority on a malware attack than a blue screen monitor.",
+                    "D. Recording the time when malware is detected until it is completely cleaned out of the server."
+                ],
+                correctAnswer: "B"
+            },
+            {
+                question: "Which of the following statements best exemplifies IT governance in disaster planning?",
+                options: [
+                    "A. Setting a threshold for the specific number of trades needed on any given day.",
+                    "B. Scrutinizing the money to be spent when purchasing new IT resources.",
+                    "C. Setting a standard for backup redundancy to prevent data calamity.",
+                    "D. Establishing evaluation points based on specific goals."
+                ],
+                correctAnswer: "C"
+            },
+            {
+                question: "Which of the following statements is TRUE about the ITIL V4?",
+                options: [
+                    "A. It takes different inputs to turn them into defined outputs.",
+                    "B. ITIL processes and functions are replaced with practices.",
+                    "C. It defines how the ITIL process is used.",
+                    "D. Its principles can be likened to cooking."
+                ],
+                correctAnswer: "B"
+            },
+            {
+                question: "Which of the following statements is NOT TRUE about an ITIL process?",
+                options: [
+                    "A. It is part of ITIL V3.",
+                    "B. It can run by itself.",
+                    "C. It takes different inputs to turn them into defined outputs.",
+                    "D. It is a set of activities performed after the other to achieve something."
+                ],
+                correctAnswer: "B"
+            },
+            {
+                question: "Which of the following statements is NOT TRUE about security in ITSM?",
+                options: [
+                    "A. It is a highly tricky facet of ITSM.",
+                    "B. It is difficult to track if it is working or not.",
+                    "C. It helps the triage and collaboration in ITSM.",
+                    "D. It can unknowingly prevent various dangerous attacks."
+                ],
+                correctAnswer: "C"
+            },
+            {
+                question: "Which of the following statements best describes automation as a DevOps principle?",
+                options: [
+                    "A. It keeps tabs to feel the reception of the overall software delivery.",
+                    "B. It enables faster delivery and is crucial for providing rapid feedback.",
+                    "C. It allows teams to focus and work on things that are easy to comprehend.",
+                    "D. It can be done through the collaboration of knowledge, experience, and ideas."
+                ],
+                correctAnswer: "B"
+            },
+            {
+                question: "Which of the following statements best exemplifies KPI 5 of ITSM security?",
+                options: [
+                    "A. Hiring white-hat hackers to purposely harm the system.",
+                    "B. Documenting downtimes to explain and support quarterly reports.",
+                    "C. Putting a higher priority on a malware attack than a blue screen monitor.",
+                    "D. Recording the time when malware is detected until it is completely cleaned out of the server."
+                ],
+                correctAnswer: "A"
+            },
+            {
+                question: "Which of the following best strengthens the ITIL principle of focusing on value?",
+                options: [
+                    "A. Determining what the customers want precisely.",
+                    "B. Eliminating any process, step, or action that does not add value.",
+                    "C. Dividing tasks into smaller parts and focusing on each step to assess value.",
+                    "D. Assessing the strengths of existing systems and using the result as the starting point."
+                ],
+                correctAnswer: "A"
+            },
+
+            // --- QUESTIONS FROM ITSM.html (Set 1) ---
+            {
+                question: "It is a cloud-based ITSM software with change management tracking and self-generating knowledge base features.",
+                options: [
+                    "A. Zabbix",
+                    "B. Zendesk Suite",
+                    "C. SolarWinds Service Desk",
+                    "D. SolarWinds Web Help Desk"
+                ],
+                correctAnswer: "C"
+            },
+            {
+                question: "These are communication centers with a single point of contact between a business and its customers.",
+                options: [
+                    "A. Chatbots",
+                    "B. Helpdesks",
+                    "C. Service Desks",
+                    "D. Web Tool Helpers"
+                ],
+                correctAnswer: "C"
+            },
+            {
+                question: "It handles the release schedule to lessen disruptions to existing services.",
+                options: [
+                    "A. Change Management",
+                    "B. Service Validation and Testing",
+                    "C. Release & Deployment Management",
+                    "D. Service Level Management"
+                ],
+                correctAnswer: "C"
+            },
+            {
+                question: "This feature highlights the difficulty of standardizing services.",
+                options: [
+                    "A. Alignment",
+                    "B. Compliance",
+                    "C. Helplessness",
+                    "D. Heterogeneity"
+                ],
+                correctAnswer: "D"
+            },
+            {
+                question: "It focuses on the qualitative capacity of an IT department.",
+                options: [
+                    "A. Availability Management",
+                    "B. Supplier Management",
+                    "C. Capacity Management",
+                    "D. Request Fulfillment"
+                ],
+                correctAnswer: "C"
+            },
+            {
+                question: "It assesses the market and how the organization plans to service it.",
+                options: [
+                    "A. Service Portfolio",
+                    "B. Demand Management",
+                    "C. Business Relationship Management",
+                    "D. Strategy Management for IT Services"
+                ],
+                correctAnswer: "D"
+            },
+            {
+                question: "It compromises the digital and virtual realms of information to create value.",
+                options: [
+                    "A. Blockchain",
+                    "B. Value Chain",
+                    "C. Virtual Value Chain",
+                    "D. Physical Value Chain"
+                ],
+                correctAnswer: "C"
+            },
+            {
+                question: "This stage of the Virtual Value Chain opens opportunities for collaboration with customers.",
+                options: [
+                    "A. Stage 1",
+                    "B. Stage 2",
+                    "C. Stage 3",
+                    "D. Stage 4"
+                ],
+                correctAnswer: "D"
+            },
+            {
+                question: "It is a cloud-based ITSM solution best known for its efficient self-service feature.",
+                options: [
+                    "A. Zabbix",
+                    "B. Zendesk Suite",
+                    "C. Jira Service Desk",
+                    "D. SolarWinds Web Help Desk"
+                ],
+                correctAnswer: "B"
+            },
+            {
+                question: "It is a popular IT server monitoring tool that is open source and free.",
+                options: [
+                    "A. Zabbix",
+                    "B. Zendesk Suite",
+                    "C. SolarWinds Service Desk",
+                    "D. SolarWinds Web Help Desk"
+                ],
+                correctAnswer: "A"
+            },
+            {
+                question: "It focuses on identifying customers and understanding their expectations.",
+                options: [
+                    "A. Availability Management",
+                    "B. Service Level Management",
+                    "C. Definition of CSI Initiatives",
+                    "D. Business Relationship Management"
+                ],
+                correctAnswer: "D"
+            },
+            {
+                question: "It refers to the virtual world of information.",
+                options: [
+                    "A. Marketplace",
+                    "B. Marketspace",
+                    "C. Virtual Value Chain",
+                    "D. Information Technology"
+                ],
+                correctAnswer: "B"
+            },
+            {
+                question: "It is the implementation and management of quality IT services.",
+                options: [
+                    "A. Virtual Value Chain",
+                    "B. IT Service Management",
+                    "C. Office of Government E-Commerce",
+                    "D. Information Technology Infrastructure Library"
+                ],
+                correctAnswer: "D"
+            },
+            {
+                question: "These are used to characterize the features of services.",
+                options: [
+                    "A. ICT Tools",
+                    "B. Value Chains",
+                    "C. ITIL Characteristics",
+                    "D. IHiP Characteristics"
+                ],
+                correctAnswer: "D"
+            },
+            {
+                question: "It is the process of plotting risk against reward.",
+                options: [
+                    "A. Risk Management",
+                    "B. Problem Management",
+                    "C. Service & Validation Testing",
+                    "D. Service Portfolio Management"
+                ],
+                correctAnswer: "A"
+            },
+            {
+                question: "Which of the following best exemplifies the New Processes stage of the virtual value chain?",
+                options: [
+                    "A. PLDT employs a paperless billing system.", 
+                    "B. PLDT asks customers to create testimonials.", 
+                    "C. PLDT upgrades its internal accounting software.", 
+                    "D. PLDT gathers more information using its website than physical locations."
+                ],
+                correctAnswer: "C"
+            },
+            {
+                question: "Which of the following is NOT an example of a service?",
+                options: [
+                    "A. Financial Advice", 
+                    "B. Restaurant Food", 
+                    "C. Theater Performance", 
+                    "D. Dentist Appointment"
+                ],
+                correctAnswer: "B"
+            },
+            {
+                question: "Which of the following statements best deals with invasion of privacy?",
+                options: [
+                    "A. Not selling information to third parties.", 
+                    "B. Assigning a team to ensure the validity of information.", 
+                    "C. Ensuring the cloud and data servers are monitored and protected.", 
+                    "D. Educating users of security risks using the Terms and Conditions agreement."
+                ],
+                correctAnswer: "C" 
+            },
+            {
+                question: "Which of the following best exemplifies the heterogeneity of service?",
+                options: [
+                    "A. An instructor discusses concepts as students listen.", 
+                    "B. Eating a burger in a fast-food restaurant during weekdays.", 
+                    "C. A patron of a massage salon occasionally changes their preferred massage type.", 
+                    "D. A hotel room not booked on Valentine's night has a different offer the next day."
+                ],
+                correctAnswer: "C"
+            },
+            {
+                question: "Which of the following is NOT considered a component of the virtual value chain?",
+                options: [
+                    "A. Gather", 
+                    "B. Organize", 
+                    "C. Distribute", 
+                    "D. Sympathize"
+                ],
+                correctAnswer: "D"
+            },
+            {
+                question: "Which of the following statements best deals with the reliability of information?",
+                options: [
+                    "A. Not selling information to third parties.", 
+                    "B. Assigning a team to ensure the validity of information.", 
+                    "C. Ensuring the cloud and data servers are monitored and protected.", 
+                    "D. Educating users of security risks using the Terms and Conditions agreement."
+                ],
+                correctAnswer: "B" 
+            },
+            {
+                question: "Which of the following implements new IT services while lessening disruptions to existing services?",
+                options: [
+                    "A. Risk Management", 
+                    "B. Change Management", 
+                    "C. Knowledge Management", 
+                    "D. Compliance Management"
+                ],
+                correctAnswer: "B"
+            },
+            {
+                question: "Which of the following statements best describes service design?",
+                options: [
+                    "A. It defines the services to be offered.", 
+                    "B. It is when ideas begin to take form.", 
+                    "C. It includes substantial contingency plans.", 
+                    "D. It should always result in superior value and quality service."
+                ],
+                correctAnswer: "B"
+            },
+            {
+                question: "Which of the following statements best describes the break-fix model of a helpdesk?",
+                options: [
+                    "A. It works to prevent incidents in the future.", 
+                    "B. It lets users contact the team if something breaks.", 
+                    "C. It focuses on providing the right solution to the user's needs.", 
+                    "D. It focuses on how the entire support process can be improved."
+                ],
+                correctAnswer: "B" 
+            },
+            {
+                question: "Which of the following statements best describes a helpdesk tool?",
+                options: [
+                    "A. It provides long-term solutions.", 
+                    "B. It considers the complete picture in preventing incidents.", 
+                    "C. It can effectively improve the rate of incident resolution.", 
+                    "D. It aims to streamline internal and external communication."
+                ],
+                correctAnswer: "C"
+            },
+            {
+                question: "Which of the following statements best describes the task-oriented nature of a helpdesk?",
+                options: [
+                    "A. It works to prevent incidents in the future.", 
+                    "B. It lets users contact the team if something breaks.", 
+                    "C. It focuses on providing the right solution to the user's needs.", 
+                    "D. It focuses on how the entire support process can be improved."
+                ],
+                correctAnswer: "C"
+            },
+            {
+                question: "Which of the following must be considered when checking the ITSM's reliability and support?",
+                options: [
+                    "A. 24/7 Support", 
+                    "B. Obsolete Version", 
+                    "C. Email-only Support", 
+                    "D. Lesser-known Brand"
+                ],
+                correctAnswer: "A"
+            },
+            {
+                question: "Which of the following statements is NOT TRUE about continual service improvement?",
+                options: [
+                    "A. It provides a feedback loop.", 
+                    "B. It re-evaluates and improves all other ITSM processes.", 
+                    "C. It monitors IT infrastructures and supports basic day-to-day tasks.", 
+                    "D. Its initiatives should be defined through service review and process evaluation."
+                ],
+                correctAnswer: "C"
+            },
+            {
+                question: "Which of the following best exemplifies the inseparability of service?",
+                options: [
+                    "A. An instructor discusses concepts as students listen.", 
+                    "B. Eating a burger in a fast-food restaurant during weekdays.", 
+                    "C. A patron of a massage salon occasionally changes their preferred massage type.", 
+                    "D. A hotel room not booked on Valentine's night has a different offer the next day."
+                ],
+                correctAnswer: "A" 
+            },
+            {
+                question: "Which of the following statements best deals with data security?",
+                options: [
+                    "A. Not selling information to third parties.", 
+                    "B. Assigning a team to ensure the validity of information.", 
+                    "C. Ensuring the cloud and data servers are monitored and protected.", 
+                    "D. Educating users of security risks using the Terms and Conditions agreement."
+                ],
+                correctAnswer: "C"
+            },
+            {
+                question: "Which of the following best exemplifies the New Knowledge stage of the virtual value chain?",
+                options: [
+                    "A. PLDT employs a paperless billing system.", 
+                    "B. PLDT asks customers to create testimonials.", 
+                    "C. PLDT starts a Home Rewards program for online customers", 
+                    "D. PLDT gathers more information using its website than physical locations."
+                ],
+                correctAnswer: "D"
+            },
+            {
+                question: "Which of the following statements is NOT TRUE about IT service management?",
+                options: [
+                    "A. It is more than day-to-day IT support.", 
+                    "B. It was developed by the Office of Government E-Commerce.", 
+                    "C. It allows organizations to maximize business value using information technology.", 
+                    "D. It demonstrates a set of practices or processes to establish a service management system."
+                ],
+                correctAnswer: "B"
+            },
+            {
+                question: "Which of the following statements best describes service operation?",
+                options: [
+                    "A. It defines the services to be offered.", 
+                    "B. It is when ideas begin to take form.", 
+                    "C. It is the day-to-day delivery of organization services.", 
+                    "D. It should always result in superior value and quality service."
+                ],
+                correctAnswer: "C"
+            },
+            {
+                question: "Which of the following reviews all relevant internal and external regulations?",
+                options: [
+                    "A. Risk Management", 
+                    "B. Change Management", 
+                    "C. Knowledge Management", 
+                    "D. Compliance Management"
+                ],
+                correctAnswer: "D"
+            },
+            {
+                question: "Which of the following statements is NOT a characteristic of a service desk?",
+                options: [
+                    "A. It is task-oriented.", 
+                    "B. It is process-oriented.", 
+                    "C. It is business-centric.", 
+                    "D. It is a proactive service."
+                ],
+                correctAnswer: "D"
+            }
+        ];
+
+        // 2. DOM Elements and State Variables
+        const questionTextEl = document.getElementById('question-text');
+        const optionsContainer = document.getElementById('options-container');
+        const nextButton = document.getElementById('next-button');
+        const cardCounterEl = document.getElementById('card-counter');
+        const feedbackMessageEl = document.getElementById('feedback-message');
+
+        let currentCardIndex = 0;
+        let answeredCorrectly = false; // Tracks if the current question has been answered correctly
+        
+        // Helper function to extract the letter key (A, B, C, D) from the option text
+        function getOptionKey(optionText) {
+            return optionText.charAt(0);
+        }
+
+        // 3. Functions
+        function loadQuestion() {
+            if (quizData.length === 0) {
+                questionTextEl.textContent = "Quiz data is empty. Please check the data source.";
+                return;
+            }
+
+            const card = quizData[currentCardIndex];
+            
+            // 1. Reset state
+            answeredCorrectly = false;
+            optionsContainer.innerHTML = '';
+            feedbackMessageEl.textContent = '';
+            
+            // Ensure Next Button is disabled until correct answer is chosen
+            nextButton.classList.remove('active');
+            nextButton.setAttribute('disabled', 'true');
+            nextButton.textContent = "Next Question"; // Reset button text
+            
+            // 2. Display Question & Counter
+            questionTextEl.textContent = card.question;
+            cardCounterEl.textContent = `Question ${currentCardIndex + 1} of ${quizData.length}`;
+            
+            // 3. Create Option Buttons
+            card.options.forEach(optionText => {
+                const li = document.createElement('li');
+                const button = document.createElement('button');
+                
+                button.className = 'option-button';
+                button.textContent = optionText;
+                button.dataset.key = getOptionKey(optionText); // Store the key (A, B, C, D)
+                button.addEventListener('click', checkAnswer);
+                
+                li.appendChild(button);
+                optionsContainer.appendChild(li);
+            });
+
+            if (currentCardIndex === quizData.length - 1 && answeredCorrectly) {
+                nextButton.textContent = "Finish/Restart Quiz";
+            }
+        }
+
+        function checkAnswer(event) {
+            const selectedButton = event.target;
+            
+            // Prevent double-checking
+            if (selectedButton.classList.contains('attempted-incorrect') || selectedButton.classList.contains('correct')) {
+                return;
+            }
+            
+            const selectedKey = selectedButton.dataset.key;
+            const correctKey = quizData[currentCardIndex].correctAnswer;
+            
+            // Disable only the clicked button temporarily
+            selectedButton.classList.add('disabled');
+            
+            // Provide feedback
+            if (selectedKey === correctKey) {
+                answeredCorrectly = true;
+                
+                // Highlight CORRECT answer and disable all options permanently for this question
+                Array.from(optionsContainer.children).forEach(li => {
+                    const button = li.querySelector('.option-button');
+                    button.removeEventListener('click', checkAnswer);
+                    button.classList.add('disabled'); // Disable all permanently
+                    if (button.dataset.key === correctKey) {
+                        button.classList.add('correct');
+                    }
+                });
+                
+                feedbackMessageEl.textContent = "✅ Correct! Click Next Question to continue.";
+                
+                // Enable Next button ONLY on correct answer
+                nextButton.classList.add('active');
+                nextButton.removeAttribute('disabled');
+
+                if (currentCardIndex === quizData.length - 1) {
+                    nextButton.textContent = "Finish/Restart Quiz";
+                }
+                
+            } else {
+                answeredCorrectly = false;
+                selectedButton.classList.add('attempted-incorrect');
+                selectedButton.classList.remove('disabled'); // Re-enable for the next attempt
+                selectedButton.removeEventListener('click', checkAnswer); // Ensure this specific option can't be clicked again
+                
+                feedbackMessageEl.textContent = "❌ Incorrect. Try another answer! The one you chose is now disabled.";
+                
+                // Next Button remains disabled
+                nextButton.classList.remove('active');
+                nextButton.setAttribute('disabled', 'true');
+            }
+        }
+
+        function nextQuestion() {
+            // Only proceed if the question was answered correctly
+            if (!answeredCorrectly) {
+                return;
+            }
+            
+            if (currentCardIndex < quizData.length - 1) {
+                currentCardIndex++;
+                loadQuestion();
+            } else {
+                // Quiz finished, wrap around or show score (for simplicity, we wrap)
+                alert(`Quiz Finished! You completed all ${quizData.length} questions. Restarting now.`);
+                currentCardIndex = 0; // Reset for restart
+                loadQuestion();
+            }
+        }
+
+        // 4. Event Listeners
+        nextButton.addEventListener('click', nextQuestion);
+
+        // 5. Initial Load
+        loadQuestion();
+        nextButton.textContent = "Start Quiz";
+    </script>
+</body>
+</html>
